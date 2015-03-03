@@ -7,7 +7,7 @@ void int_toStrDec(char *str, int num)
     int temp;
     int digitCount = 0;
     int i;
-    
+
     if (num == 0)
     {
         digitCount = 1;
@@ -21,14 +21,14 @@ void int_toStrDec(char *str, int num)
             temp /= 10;
             digitCount++;
         }
-    
+
         for (i = 0; i < digitCount; i++)
         {
             str[digitCount - i - 1] = num % 10 + '0';
             num /= 10;
         }
     }
-        
+
     str[digitCount] = 0;
 }
 
@@ -39,7 +39,7 @@ void int_toStrHex(char *str, int num)
     int digit;
     int temp;
     int i;
-    
+
     if (num == 0)
     {
         digitCount = 1;
@@ -53,7 +53,7 @@ void int_toStrHex(char *str, int num)
             temp >>= 4;
             digitCount++;
         }
-    
+
         for (i = 0; i < digitCount; i++)
         {
             digit = num & 0xF;
@@ -61,7 +61,7 @@ void int_toStrHex(char *str, int num)
             str[digitCount - i - 1] = hex[digit];
         }
     }
-    
+
     str[digitCount] = 0;
 }
 
@@ -70,26 +70,26 @@ void int_toStrBinary(char *str, int num)
     int temp;
     int digitCount = 0;
     int i;
-    
+
     temp = num;
     while (temp > 0)
     {
         temp >>= 1;
         digitCount++;
     }
-    
+
     if (num == 0)
         digitCount = 8;
-    
+
     if (digitCount % 8 != 0)
         digitCount += 8 - (digitCount % 8);
-        
+
     for (i = 0; i < digitCount; i++)
         {
             str[digitCount - i - 1] = (num & 1) + '0';
-            num >>= 1;           
+            num >>= 1;
         }
-        
+
     str[digitCount] = 0;
 }
 
@@ -100,15 +100,15 @@ void int_toStr(char *str, int num, int base)
         case 2:
             int_toStrBinary(str, num);
             break;
-            
+
         case 10:
             int_toStrDec(str, num);
             break;
-            
+
         case 16:
             int_toStrHex(str, num);
             break;
-            
+
         default:
             int_toStrDec(str, num);
             break;
@@ -200,7 +200,7 @@ char *stringf(char *str, ...)
 {
      char *res;
      va_list list;
-     
+
      va_start(list, str);
      res = va_stringf(str, list);
      return res;
