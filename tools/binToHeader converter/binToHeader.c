@@ -9,14 +9,14 @@ int main(int argc, char *argv[])
     char *extPos;
     unsigned char symb;
     int fpos;
-    
+
     strcpy(fnameRes, argv[1]);
     extPos = strchr(fnameRes, '.');
     strcpy(extPos, ".h");
 
     fin = fopen(argv[1], "rb");
     fout = fopen(fnameRes, "wb");
-    
+
     fpos = 1;
     symb = fgetc(fin);
     while (!feof(fin))
@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
         symb = fgetc(fin);
         fpos++;
     }
-    
+
     fclose(fout);
     fclose(fin);
     return 0;
