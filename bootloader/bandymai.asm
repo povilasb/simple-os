@@ -5,14 +5,14 @@ ORG 0x7C00
 jmp START
 
 ;spausdina ax desimtainiu formatu
-PrintDec:  
+PrintDec:
  pusha
  mov cx, 0 ;skaitmenu skaitliukas
  mov dx, 0 ;reikia, kad butu 0, nes DIV daro taip DX:AX / operandas
  divide:
     mov bx, 10
-    div bx 
-    add cx, 1 
+    div bx
+    add cx, 1
     push dx ;skaitmuo dedamas i steka
     mov dx, 0
     cmp ax, 0
@@ -27,7 +27,7 @@ PrintDec:
     cmp cx, 0
     jne print
  popa
-ret  
+ret
 
 keaboard_handler:
     pusha
@@ -69,7 +69,7 @@ clear_scr:
         inc si
         cmp si, 4000     ;80*25*2
         jl keepClearing
-       
+
     pop es
     popa
 ret
@@ -79,7 +79,7 @@ print_vram:
     push es
         mov ax, 0xB800
         mov es, ax
-        
+
         mov di, 0
         print_vramLoop:
             mov al, [si]
@@ -90,22 +90,22 @@ print_vram:
             add di, 2
             inc si
             jmp print_vramLoop
-        
+
     print_vramEnd:
         pop es
         popa
 ret
- 
+
 print_bios:
-    pusha 
+    pusha
     print_loop:
         lodsb
         or al, al  ;nustatomas zf
-        jz print_loopEnd    
+        jz print_loopEnd
         mov ah, 0x0E
         int 0x10
         jmp print_loop
-    
+
     print_loopEnd:
     popa
 ret
@@ -121,10 +121,10 @@ read_2ndLoader:
     mov dl, 0 ;floppy drive number
     int 0x13
     jnc read_2ndLoaderEnd
-    
+
     mov si, floppyErrorMsg
     call print_bios
-    
+
     read_2ndLoaderEnd:
         popa
 ret
@@ -135,18 +135,18 @@ START:
     mov es, ax
     mov ss, ax
     mov sp, 0xAC00 ;steko virsune, 300 baitu
-    
+
     mov si, startMsg
     call print_bios
     mov bx, 0xAD00
     call read_2ndLoader
-    
+
     cli
     mov si, 9
     shl si, 2   ;9 * 4
     mov [es:si], word keaboard_handler
     mov [es:si + 2], cs
-    
+
     mov si, 0x80
     shl si, 2   ;21 * 4
     mov [es:si], word kernel_handler
@@ -156,14 +156,14 @@ START:
     call 0x0000:0xAD00
     hang:
     jmp hang
- 
+
 startMsg db 'ADOS 2011 :D', 13, 10, 0
 keyMsg db 'Key pressed', 13, 10, 0
 floppyErrorMsg db 'Error reading kernel from flopy!', 13, 10, 0
 welcomeMsg db 'Greetings C kernel!', 13, 10, 0
- 
+
 times 510-($-$$) db 0
 db 0x55
 db 0xAA
-   
+
 ;times 1474560-($-$$) db 0  ;1.44 MB
