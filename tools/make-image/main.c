@@ -27,13 +27,6 @@ int main()
     int i;
     int floppySize = 1474560;
 
-    /*
-    fout = fopen("D:\\kita\\programu sistemos\\4 semestras\\Operacines sistemos\\pratybos\\simple os\\bootloader\\boot.img", "wb");
-    bytesWritten += append_bin("D:\\kita\\programu sistemos\\4 semestras\\Operacines sistemos\\pratybos\\simple os\\bootloader\\boot.bin", fout); //bootloader
-    bytesWritten += append_bin("D:\\kita\\programu sistemos\\4 semestras\\Operacines sistemos\\pratybos\\simple os\\kernel\\main.bin", fout); //kernel
-    */
-
-    //dir: kernel
     fout = fopen("../bootloader/boot.img", "wb");
     bytesWritten += append_bin("../bootloader/boot.bin", fout); //bootloader
     bytesWritten += append_bin("main.bin", fout); //kernel
