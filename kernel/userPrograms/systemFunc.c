@@ -7,7 +7,7 @@ void uprintf(char *str, ...)
 {
     char formatedStr[2048];
     va_list list;
-     
+
     va_start(list, str);
     va_stringf(formatedStr, str, list);
     asm("mov %0, %%esi;"
@@ -40,16 +40,16 @@ void uexit()
 void *umalloc(unsigned int size)
 {
     unsigned int res;
-    
+
     asm("mov %1, %%eax;"
         "mov %2, %%ebx;"
         "int $0x80;"
         "mov %%eax, %0;"
-        : "=r" (res) 
+        : "=r" (res)
         : "r" (SYSCALL_MALLOC), "r" (size)
         : "eax", "ebx"
         );
-        
+
     return (void*) res;
 }
 
@@ -66,16 +66,16 @@ void ufree(void *addr)
 unsigned int uexec(char *program)
 {
     unsigned int res;
-    
+
     asm("mov %1, %%eax;"
         "mov %2, %%ebx;"
         "int $0x80;"
         "mov %%eax, %0;"
-        : "=r" (res) 
+        : "=r" (res)
         : "r" (SYSCALL_EXEC_PROGRAM), "r" ((unsigned int) program)
         : "eax", "ebx"
         );
-        
+
     return res;
 }
 

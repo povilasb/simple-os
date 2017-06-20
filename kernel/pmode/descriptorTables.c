@@ -28,7 +28,7 @@ int timer = 0;
 void init_gdt()
 {
     memset((char*)&GDT[0], 0, sizeof(GDTEntry)); //0x0
-    
+
     //code 0x8
     GDT[1].limitLow = 0xFFFF;
     GDT[1].baseLow = 0x0;
@@ -36,7 +36,7 @@ void init_gdt()
     GDT[1].access = 0x9A; //10011010b
     GDT[1].granularity = 0xCF; //11001111b
     GDT[1].baseHigh = 0;
-    
+
     //data 0x10
     GDT[2].limitLow = 0xFFFF;
     GDT[2].baseLow = 0x0;
@@ -44,7 +44,7 @@ void init_gdt()
     GDT[2].access = 0x92; //10010010b
     GDT[2].granularity = 0xCF; //11001111b
     GDT[2].baseHigh = 0;
-    
+
     //video memory 0x18
     GDT[3].limitLow = 0xFFFF;
     GDT[3].baseLow = 0x8000;
@@ -52,7 +52,7 @@ void init_gdt()
     GDT[3].access = 0x92; //10010010b
     GDT[3].granularity = 0xCF; //11001111b
     GDT[3].baseHigh = 0;
-    
+
     //virtual video memory 0x20
     GDT[4].limitLow = 0xFFFF;
     GDT[4].baseLow = 0x6000;
@@ -60,7 +60,7 @@ void init_gdt()
     GDT[4].access = 0x92; //10010010b
     GDT[4].granularity = 0xCF; //11001111b
     GDT[4].baseHigh = 0x6;
-    
+
     gdtDesc.size = sizeof(GDT);
     gdtDesc.startAddress = (unsigned int) &GDT[0];
     load_gdt(&gdtDesc);
@@ -84,23 +84,23 @@ void init_idt()
 {
     int i;
     char str[256];
-    
+
     for (i = 0; i < 255; i++)
         idt_setEntry(i, 0, 0, 0, 0, 0, 0xE); //not present
-        
+
     //for (i = 38; i < 40; i++)
        idt_setEntry(39, (uint)isr0xUnknown, 0x8, 1, 0, 0, 0xE);
-    
-    idt_setEntry(0x8, (unsigned int) isr0x8, 0x8, 1, 0, 0, 0xE);  
+
+    idt_setEntry(0x8, (unsigned int) isr0x8, 0x8, 1, 0, 0, 0xE);
     idt_setEntry(0xB, (unsigned int) isr0xB, 0x8, 1, 0, 0, 0xE);
     idt_setEntry(0xC, (unsigned int) isr0xC, 0x8, 1, 0, 0, 0xE);
     idt_setEntry(0xD, (unsigned int) isr0xD, 0x8, 1, 0, 0, 0xE);
-    idt_setEntry(0xF, (unsigned int) isr0xF, 0x8, 1, 0, 0, 0xE);    
+    idt_setEntry(0xF, (unsigned int) isr0xF, 0x8, 1, 0, 0, 0xE);
     idt_setEntry(0xE, (unsigned int) isr0xE, 0x8, 1, 0, 0, 0xE);
     idt_setEntry(0x80, (unsigned int) isr0x80, 0x8, 1, 0, 0, 0xE);
     idt_setEntry(0x20, (uint)isr0x20, 0x8, 1, 0, 0, 0xE); //PIT
     idt_setEntry(0x21, (uint)isr0x21, 0x8, 1, 0, 0, 0xE); //keyboard
-    
+
     idtDesc.limit = sizeof(IDT);
     idtDesc.base = (uint) &IDT;
     load_idt(&idtDesc);
@@ -114,34 +114,34 @@ void load_idt(IDTDescriptor *idtd)
 void int0xUnknown_handler(IntRegisters regs)
 {
     PID runningProcess;
-    
+
     asm("mov %0, %%esp" : : "r" (get_kernelESP()));
     runningProcess = get_runningProcess();
     process_saveContext(runningProcess, &regs);
     resume_process(runningProcess);
-    
+
     kprintf("Unknown interrupt\n");
     kprintf("eax: %x, ebx: %x, ecx: %x, edx: %x\n", regs.eax, regs.ebx, regs.ecx, regs.edx);
     kprintf("esi: %x, edi: %x, esp: %x, ebp: %x\n", regs.esi, regs.edi, regs.esp, regs.ebp);
     kprintf("EFLAGS: %x, cs: %x, eip: %x\n", regs.eflags, regs.cs, regs.eip);
 
-    
+
     start_processScheduler();
 }
 
 void int0x80_handler(IntRegisters regs)
 {
     PID runningProcess;
-    
+
     asm("mov %0, %%esp" : : "r" (get_kernelESP()));
     runningProcess = get_runningProcess();
     process_saveContext(runningProcess, &regs);
-    
+
     //kprintf("%s\n", runningProcess->processName);
     //kprintf("eax: %x, ebx: %x, ecx: %x, edx: %x\n", regs.eax, regs.ebx, regs.ecx, regs.edx);
     //kprintf("esi: %x, edi: %x, esp: %x, ebp: %x\n", regs.esi, regs.edi, regs.esp, regs.ebp);
     //kprintf("EFLAGS: %x, cs: %x, eip: %x\n", regs.eflags, regs.cs, regs.eip);
-    
+
     handle_systemCall(&regs);
     start_processScheduler();
 }
@@ -149,13 +149,13 @@ void int0x80_handler(IntRegisters regs)
 void int0x20_handler(IntRegisters regs)
 {
     PID runningProcess;
-    
+
     asm("mov %0, %%esp" : : "r" (get_kernelESP()));
     runningProcess = get_runningProcess();
     process_saveContext(runningProcess, &regs);
     resume_process(runningProcess);
-    
-    timer++;    
+
+    timer++;
     outb(PIC1_PORT, 0x20); //PIC ack
     start_processScheduler();
 }
@@ -164,13 +164,13 @@ void int0x21_handler(IntRegisters regs)
 {
     PID runningProcess;
     unsigned char scanCode;
-    
+
     asm("mov %0, %%esp" : : "r" (get_kernelESP()));
     runningProcess = get_runningProcess();
     process_saveContext(runningProcess, &regs);
     resume_process(runningProcess);
-     
-    scanCode = inb(0x60); 
+
+    scanCode = inb(0x60);
     if (scanCode < 0x80) //key pressed, if scanCode > 0x80 - key released
         key_pressed(scanCode);
     outb(PIC1_PORT, 0x20); //PIC ack
@@ -180,7 +180,7 @@ void int0x21_handler(IntRegisters regs)
 void int0x8_handler()
 {
     PID pid;
-    
+
     asm("mov %0, %%esp" : : "r" (get_kernelESP()));
     pid = get_runningProcess();
     kprintf("#----Error---- Double fault: %s pid=0x%x\n", pid->processName, pid->pid);
@@ -191,7 +191,7 @@ void int0x8_handler()
 void int0xB_handler(IntWithErrorRegisters regs)
 {
     PID pid;
-    
+
     asm("mov %0, %%esp" : : "r" (get_kernelESP()));
     pid = get_runningProcess();
     kprintf("#----Error---- Segment not present: %s pid=0x%x\n", pid->processName, pid->pid);
@@ -203,7 +203,7 @@ void int0xB_handler(IntWithErrorRegisters regs)
 void int0xC_handler()
 {
     PID pid;
-    
+
     asm("mov %0, %%esp" : : "r" (get_kernelESP()));
     pid = get_runningProcess();
     kprintf("#----Error---- Stack fault: %s pid=0x%x\n", pid->processName, pid->pid);
@@ -214,7 +214,7 @@ void int0xC_handler()
 void int0xD_handler()
 {
     PID pid;
-    
+
     asm("mov %0, %%esp" : : "r" (get_kernelESP()));
     pid = get_runningProcess();
     kprintf("#----Error---- General protection fault: %s pid=0x%x\n", pid->processName, pid->pid);
@@ -225,7 +225,7 @@ void int0xD_handler()
 void int0xE_handler(unsigned int faultingAddr)
 {
     PID pid;
-    
+
     asm("mov %0, %%esp" : : "r" (get_kernelESP()));
     pid = get_runningProcess();
     kprintf("#----Error---- Page fault: 0x%x : %s pid=0x%x\n", faultingAddr, pid->processName, pid->pid);
@@ -236,7 +236,7 @@ void int0xE_handler(unsigned int faultingAddr)
 void int0xF_handler()
 {
     PID pid;
-    
+
     asm("mov %0, %%esp" : : "r" (get_kernelESP()));
     pid = get_runningProcess();
     kprintf("#----Error---- Unknown interrupt: %s pid=0x%x\n", pid->processName, pid->pid);

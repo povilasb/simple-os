@@ -4,7 +4,7 @@
 void start()
 {
     unsigned int timer = 0;
-    
+
     while (1)
     {
         timer++;

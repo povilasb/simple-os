@@ -1,4 +1,4 @@
-#ifndef _SYSCALLS_H 
+#ifndef _SYSCALLS_H
 #define _SYSCALLS_H
 
 #include "../pmode/descriptorTables.h"

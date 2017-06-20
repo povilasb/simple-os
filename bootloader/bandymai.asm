@@ -21,7 +21,7 @@ PrintDec:
     pop dx  ;skaitmuo imamas is steko
     sub cx, 1
     add dx, 30h ;gaunamas skaiciaus ASCII simbolis
-    mov si, sk
+    mov si, sp
     mov [si], dl
     call print_bios
     cmp cx, 0

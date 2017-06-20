@@ -3,17 +3,17 @@
 
 #include "../stdlib/stdtypes.h"
 
-typedef struct 
+typedef struct
 {
-   ushort limitLow;           
-   ushort baseLow;           
-   uchar  baseMiddle;  
-   uchar  access;              
+   ushort limitLow;
+   ushort baseLow;
+   uchar  baseMiddle;
+   uchar  access;
    uchar  granularity;
    uchar  baseHigh;
 } __attribute__((packed)) GDTEntry;
 
-typedef struct 
+typedef struct
 {
     unsigned short size;
     unsigned int startAddress; //address of first gdt entry
@@ -21,11 +21,11 @@ typedef struct
 
 typedef struct
 {
-   ushort offsetLow; 
-   ushort selector; 
-   uchar zero;      
-   uchar typeAttr; 
-   ushort offsetHigh; 
+   ushort offsetLow;
+   ushort selector;
+   uchar zero;
+   uchar typeAttr;
+   ushort offsetHigh;
 } __attribute__((packed)) IDTEntry;
 
 typedef struct
@@ -36,13 +36,13 @@ typedef struct
 
 typedef struct
 {
-    unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax; 
+    unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax;
     unsigned int eip, cs, eflags;
 } IntRegisters;
 
 typedef struct
 {
-    unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax; 
+    unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax;
     unsigned int errorCode;
     unsigned int eip, cs, eflags;
 } IntWithErrorRegisters;

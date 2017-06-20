@@ -22,7 +22,7 @@ void print_pids(Queue *q)
 {
     QueueElement *e;
     PCB *pcb;
-    
+
     kprintf("----------Processes---------\n");
     e = q->front;
     while (e != NULL)
@@ -40,25 +40,25 @@ void print_allProcesses()
 }
 
 void init_processScheduler()
-{       
+{
     init_queue(&allProcesses);
     init_queue(&readyProcesses);
     init_queue(&waitingProcesses);
     init_stack(&waitingKeyboardProcesses);
-    
+
     idleProcess = create_process("IdleProcess.exe");
 }
 
 void start_processScheduler()
-{   
+{
     runningProcess = (PID)queue_removeFirst(&readyProcesses);
     while (runningProcess == idleProcess) //search if there are any processes other than idle
         runningProcess = (PID)queue_removeFirst(&readyProcesses);
     if (runningProcess == NULL) //no ready processes
         runningProcess = idleProcess;
-    
+
     //kprintf("sched: %s\n", runningProcess->processName);
-    
+
     process_loadContext(runningProcess);
 }
 
@@ -70,29 +70,29 @@ unsigned int load_process(unsigned int *pages, char *processName)
     char *programText;
     unsigned int bytesToCopy;
     unsigned int bytesCopied = 0;
-    
+
     program = find_file(processName);
     if (program == NULL)
         return 0;
-        
+
     pageCount = size_inFrames(program->size);
     for (i = 0; i < pageCount; i++)
     {
         pages[i] = frame_address(frame_alloc());
         remote_mapPage(pages[i], pages[i]);
         programText = (char*) pages[i];
-        
+
         bytesToCopy  = program->size - bytesCopied;
         if (bytesToCopy > FRAME_SIZE)
             bytesToCopy = FRAME_SIZE;
-            
+
         for (j = 0; j < bytesToCopy; j++)
             programText[j] = program->data[i*FRAME_SIZE + j];
-        
+
         bytesCopied += bytesToCopy;
         unmap_page(pages[i]);
     }
-        
+
     return pageCount;
 }
 
@@ -101,37 +101,37 @@ PID create_process(char *processName)
     PCB *pcb;
     int i;
     int progPageCount = 0; //pages for program text
-    
+
     pcb = kmalloc(sizeof(PCB));
     if (pcb == NULL)
         return 0;
-        
+
     strcpy(pcb->processName, processName);
     pcb->processState = PROC_STATE_NEW;
     pcb->pid = (unsigned int) pcb;
     pcb->priority = PROC_PRIORITY_USER;
-    
+
     for (i = 0; i < PROC_MAX_MEMORY_PAGES; i++)
         pcb->memoryPages[i] = PROC_UNUSED_PAGE;
-    
+
     progPageCount = load_process(pcb->memoryPages, processName); //load program text
-    if (progPageCount == 0) 
+    if (progPageCount == 0)
         return NULL;
-    
+
     //initializing process stack
     pcb->memoryPages[PROC_MAX_MEMORY_PAGES - 2] = frame_address(frame_alloc());
-    
+
     //initializing heap
     for (i = progPageCount; i < PROC_MAX_MEMORY_PAGES  - 3; i++)
-        pcb->memoryPages[i] = frame_address(frame_alloc());       
+        pcb->memoryPages[i] = frame_address(frame_alloc());
     init_heap(&pcb->processHeap, progPageCount * FRAME_SIZE, (i - progPageCount));
-     
+
     //initializing registers
     pcb->registers.EAX = 0;
     pcb->registers.EBX = 0;
-    pcb->registers.ECX = 0;    
-    pcb->registers.EDX = 0;     
-    pcb->registers.ESP = (PROC_MAX_MEMORY_PAGES - 1) * FRAME_SIZE - 4; 
+    pcb->registers.ECX = 0;
+    pcb->registers.EDX = 0;
+    pcb->registers.ESP = (PROC_MAX_MEMORY_PAGES - 1) * FRAME_SIZE - 4;
     pcb->registers.EBP = 0;
     pcb->registers.ESI = 0;
     pcb->registers.EDI = 0;
@@ -143,8 +143,8 @@ PID create_process(char *processName)
     pcb->registers.ES = 0x10;
     pcb->registers.FS = 0x10;
     pcb->registers.GS = 0x10;
-    
-    queue_add(&allProcesses, (void*)pcb->pid); 
+
+    queue_add(&allProcesses, (void*)pcb->pid);
     return pcb;
 }
 
@@ -157,33 +157,33 @@ void resume_process(PID pid)
 void process_loadContext(PID pid)
 {
     int i;
-    
+
     pid->processState = PROC_STATE_RUNNING;
-    
+
     //memory switch
-    for (i = 0; i < PROC_MAX_MEMORY_PAGES; i++) 
+    for (i = 0; i < PROC_MAX_MEMORY_PAGES; i++)
         if (pid->memoryPages[i] != PROC_UNUSED_PAGE)
         {
             unmap_page(i * FRAME_SIZE);
-            remote_mapPage(i * FRAME_SIZE, pid->memoryPages[i]); 
+            remote_mapPage(i * FRAME_SIZE, pid->memoryPages[i]);
         }
-        
+
     //kprintf("load: %s %x\n", pid->processName, pid->pid);
-            
-    kernelESP = 0x6504FE0;    
+
+    kernelESP = 0x6504FE0;
     asm("push %0;"
         "pop %%esp;"
         "push %1;"
         "push %2;"
         "push %3;"
-        : : "g" (pid->registers.ESP), "g" (pid->registers.EFLAGS), "g" (pid->registers.CS), 
+        : : "g" (pid->registers.ESP), "g" (pid->registers.EFLAGS), "g" (pid->registers.CS),
             "g" (pid->registers.EIP)
-        ); 
+        );
     asm("push %0;"
         "push %1;"
         "push %2;"
         "push %3;"
-        : :  "g" (pid->registers.DS), "g" (pid->registers.ES), "g" (pid->registers.FS), 
+        : :  "g" (pid->registers.DS), "g" (pid->registers.ES), "g" (pid->registers.FS),
              "g" (pid->registers.GS)
         );
     asm("push %0;"
@@ -195,9 +195,9 @@ void process_loadContext(PID pid)
         "push %6;"
         "push %7;"
         : : "g" (pid->registers.EAX), "g" (pid->registers.ECX), "g" (pid->registers.EDX),
-            "g" (pid->registers.EBX), "g" (pid->registers.ESP), "g" (pid->registers.EBP), 
+            "g" (pid->registers.EBX), "g" (pid->registers.ESP), "g" (pid->registers.EBP),
             "g" (pid->registers.ESI), "g" (pid->registers.EDI)
-        ); 
+        );
 
     asm("popa;"
         "pop %%gs;"
@@ -205,7 +205,7 @@ void process_loadContext(PID pid)
         "pop %%es;"
         "pop %%ds;"
         "iret;"
-        : : 
+        : :
         );
 }
 
@@ -228,17 +228,17 @@ void process_saveContext(PID pid, IntRegisters *regs)
 void terminate_process(PID pid)
 {
     int i;
- 
+
     if (queue_removeElement(&allProcesses, (void*)pid) == FALSE) //no such process
         return;
-        
+
     //freeing memory used by the process
-    for (i = 0; i < PROC_MAX_MEMORY_PAGES; i++) 
+    for (i = 0; i < PROC_MAX_MEMORY_PAGES; i++)
         if (pid->memoryPages[i] != PROC_UNUSED_PAGE)
         {
             frame_free(frame_number(pid->memoryPages[i]));
-            unmap_page(i * FRAME_SIZE);          
-        }    
+            unmap_page(i * FRAME_SIZE);
+        }
 
     //removing PID from all process queues
     while (queue_removeElement(&allProcesses, (void*)pid->pid)){}
@@ -268,7 +268,7 @@ unsigned int get_kernelESP()
 void keyboard_askResource()
 {
     runningProcess->processState = PROC_STATE_WAITING;
-    
+
     while (queue_removeElement(&readyProcesses, (void*)runningProcess->pid)){}
     queue_add(&waitingProcesses, (void*)runningProcess->pid);
     stack_push(&waitingKeyboardProcesses, (void*)runningProcess->pid);
@@ -279,19 +279,19 @@ void keyboard_createResource(char *line)
     PID pid;
     char *p;
     int i;
-    
+
     //remove process from waiting queues
     pid  = stack_pop(&waitingKeyboardProcesses);
     if (pid != NULL)
     {
         while (queue_removeElement(&waitingProcesses, (void*)pid->pid)){}
-    
+
         //copy input buffer to process memory, address is in EDI
-        for (i = 0; i < PROC_MAX_MEMORY_PAGES; i++) 
+        for (i = 0; i < PROC_MAX_MEMORY_PAGES; i++)
             if (pid->memoryPages[i] != PROC_UNUSED_PAGE)
-                remote_mapPage(i * FRAME_SIZE, pid->memoryPages[i]); 
+                remote_mapPage(i * FRAME_SIZE, pid->memoryPages[i]);
         strcpy((char*)pid->registers.EDI, line);
-    
+
         //add processes to ready queue
         queue_add(&readyProcesses, (void*)pid->pid);
     }

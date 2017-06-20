@@ -44,18 +44,18 @@ int kprint_str(char *message, unsigned int cursor)
                 console_scroll(1);
                 line--;
             }
-            
+
 			i = line * 80 * 2;
 			j++;
-		} 
-        else 
+		}
+        else
         {
 			kprint_symbol(message[j], i);
 			j++;
 			i = i + 2;
 		}
 	}
-    
+
     return i;
 }
 
@@ -83,18 +83,18 @@ int kprint_str2(char *message, unsigned int line)
                 console_scroll(1);
                 line--;
             }
-            
+
 			i = line * 80 * 2;
 			j++;
-		} 
-        else 
+		}
+        else
         {
 			kprint_symbol(message[j], i);
 			j++;
 			i = i + 2;
 		}
 	}
-    
+
     return line;
 }
 
@@ -108,7 +108,7 @@ void kprintf(char *str, ...)
 {
      char formatedStr[2048];
      va_list list;
-     
+
      va_start(list, str);
      va_stringf(formatedStr, str, list);
      kprint(formatedStr);
@@ -116,27 +116,27 @@ void kprintf(char *str, ...)
 
 void console_scroll(int lineCount)
 {
-    int bytesToCopy; 
+    int bytesToCopy;
     int spacesToFill;
     int copyStart; //offset from where to start copying
     int spacesStart;
     unsigned short a;
-    
+
     bytesToCopy =  (SCREEN_LINE_COUNT - lineCount) * SCREEN_LINE_LENGTH * SCREEN_BYTES_PER_SYMBOL;
     spacesToFill = lineCount * SCREEN_LINE_LENGTH * SCREEN_BYTES_PER_SYMBOL;
     copyStart = SCREEN_LINE_LENGTH * lineCount * SCREEN_BYTES_PER_SYMBOL;
     spacesStart = (SCREEN_LINE_COUNT - lineCount) * SCREEN_LINE_LENGTH * SCREEN_BYTES_PER_SYMBOL;
-    
+
     asm("mov %2, %%ax;"
         "mov %%ax, %%es;"
         "mov %0, %%ecx;"
         "mov %1, %%esi;"
         "xor %%edi, %%edi;"
         "rep movsb %%es:(%%esi), %%es:(%%edi)"
-        : : "r" (bytesToCopy), "r" (copyStart), "m" (videoMemorySegment)
+        : : "g" (bytesToCopy), "g" (copyStart), "m" (videoMemorySegment)
         : "eax", "ecx", "edi", "esi"
         );
-               
+
     asm("mov $0x00, %%al;"
         "mov %0, %%ecx;"
         "mov %1, %%edi;"
@@ -156,7 +156,7 @@ void outb(short port, char byte)
 {
     asm("mov %1, %%al;"
         "mov %0, %%dx;"
-        "out %%al, %%dx" 
+        "out %%al, %%dx"
         : : "r" (port), "r" (byte)
         : "eax", "edx");
 }
@@ -165,7 +165,7 @@ void outw(short port, short word)
 {
     asm("mov %1, %%ax;"
         "mov %0, %%dx;"
-        "out %%ax, %%dx" 
+        "out %%ax, %%dx"
         : : "r" (port), "r" (word)
         : "eax", "edx");
 }
@@ -174,7 +174,7 @@ void outd(short port, int dword)
 {
     asm("mov %1, %%eax;"
         "mov %0, %%dx;"
-        "out %%eax, %%dx" 
+        "out %%eax, %%dx"
         : : "r" (port), "r" (dword)
         : "eax", "edx");
 }
@@ -182,13 +182,13 @@ void outd(short port, int dword)
 char inb(short port)
 {
     char res;
-    
+
     asm("mov %1, %%dx;"
         "in %%dx, %%al;"
         "mov %%al, %0"
-        : "=r" (res) 
+        : "=r" (res)
         : "r" (port)
         : "eax", "edx");
-        
+
     return res;
 }

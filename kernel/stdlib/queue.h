@@ -7,7 +7,7 @@ typedef struct structQueueElement
     struct structQueueElement *next;
 } QueueElement;
 
-typedef struct 
+typedef struct
 {
     QueueElement *front;
     QueueElement *rear;
