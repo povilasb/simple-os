@@ -133,7 +133,7 @@ void console_scroll(int lineCount)
         "mov %1, %%esi;"
         "xor %%edi, %%edi;"
         "rep movsb %%es:(%%esi), %%es:(%%edi)"
-        : : "r" (bytesToCopy), "r" (copyStart), "m" (videoMemorySegment)
+        : : "g" (bytesToCopy), "g" (copyStart), "m" (videoMemorySegment)
         : "eax", "ecx", "edi", "esi"
         );
 
