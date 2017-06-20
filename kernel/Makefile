@@ -11,7 +11,7 @@ obj_files = $(src_files:.c=.o)
 CFLAGS=-nostdlib -nostdinc -fno-builtin -fno-stack-protector
 
 all: user_programs $(obj_files)
-	ld --Ttext 0x6400000 --oformat binary $(obj_files) -o main.bin
+	ld --Ttext 0x6400000 -m elf_i386 --oformat binary $(obj_files) -o main.bin
 	./makeImage.lexe
 	make clean
 
