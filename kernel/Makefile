@@ -34,3 +34,7 @@ clean:
 	rm -f pmode/*.o ; \
 	rm -f stdlib/*.o ; \
     rm -f kernel/*.o
+
+.PHONY: qemu
+qemu:
+	qemu-system-x86_64 -fda sos.img2
