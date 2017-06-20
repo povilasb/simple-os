@@ -1,3 +1,2 @@
-.PHONY: bootloader
-bootloader: boot.asm
-	nasm $^
+boot.bin: boot.asm
+	nasm -f bin $^ -o $@
