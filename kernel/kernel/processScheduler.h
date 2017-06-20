@@ -25,7 +25,7 @@ typedef struct
     unsigned int CS, SS, ES, DS, FS, GS; //segment registers
 } __attribute__((packed)) RegisterList;
 
-typedef struct 
+typedef struct
 {
     unsigned char processName[32];
     unsigned char processState;

@@ -2,32 +2,32 @@
 #include "../stdlib/stdio.h"
 #include "../stdlib/stdlib.h"
 
-unsigned char programShell[] = 
+unsigned char programShell[] =
 {
     #include "../userPrograms/shell.h"
 };
 
-unsigned char programIdleProcess[] = 
+unsigned char programIdleProcess[] =
 {
     #include "../userPrograms/IdleProcess.h"
 };
 
-unsigned char programProg1[] = 
+unsigned char programProg1[] =
 {
     #include "../userPrograms/Prog1.h"
 };
 
-unsigned char programError[] = 
+unsigned char programError[] =
 {
     #include "../userPrograms/error.h"
 };
 
-unsigned char programInput[] = 
+unsigned char programInput[] =
 {
     #include "../userPrograms/input.h"
 };
 
-FileNode fileList[] = 
+FileNode fileList[] =
 {
     {
         .name = "shell.exe",
@@ -66,10 +66,10 @@ void init_fileSystem()
 FileNode *find_file(char *fileName)
 {
     int i;
-    
+
     for (i = 0; i < filesCount; i++)
         if (strcmp(fileList[i].name, fileName) == 0)
             return &fileList[i];
-            
+
     return (FileNode*)NULL;
 }

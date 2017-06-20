@@ -3,17 +3,17 @@
 
 #include "../kernel/kernelHeap.h"
 
-#define FRAMES_COUNT 1024*128 
+#define FRAMES_COUNT 1024*128
 #define FRAMES_START_ADDR 0x100000
 #define FRAME_SIZE 4096 //4 kB
 
 //all numbers are in frames
 #define PAGE_DIRECTORY_START 0
-#define PAGE_TABLES_START 1 
-#define PAGE_TABLE_COUNT 1024 
+#define PAGE_TABLES_START 1
+#define PAGE_TABLE_COUNT 1024
 
 #define USER_PAGES_START PAGE_TABLES_START + PAGE_TABLE_COUNT //frame number where user pages start
-#define KERNEL_START_ADDR 0x6400000 //100 MB 
+#define KERNEL_START_ADDR 0x6400000 //100 MB
 #define KERNEL_SOURCE_SIZE 256 //1 MB = 256 frames
 #define KERNEL_STACK_START_ADDR KERNEL_START_ADDR + 0x100000 + FRAME_SIZE //kernel + 1MB + 4kB
 #define KERNEL_STACK_SIZE 4
@@ -34,7 +34,7 @@ typedef struct
     unsigned int reserved2 : 2;
     unsigned int unused : 3;
     unsigned int frameAddress : 20; //physical frame address
-    
+
 } __attribute__((packed)) PageTableEntry;
 
 typedef struct

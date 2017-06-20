@@ -5,7 +5,7 @@ typedef struct
 {
     char name[32];
     unsigned int size;
-    unsigned char *data; 
+    unsigned char *data;
 } FileNode;
 
 FileNode *find_file(char *fileName);

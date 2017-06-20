@@ -7,7 +7,7 @@ char HEX_DIGITS[] = "0123456789abcdef";
 int memcpy(char *dst, char *src, int n)
 {
     int i;
-    
+
     for (i = 0; i < n; i++)
         dst[i] = src[i];
 }
@@ -15,7 +15,7 @@ int memcpy(char *dst, char *src, int n)
 int memset(char *dst, unsigned char value, unsigned int n)
 {
     int i;
-    
+
     for (i = 0; i < n; i++)
         dst[i] = value;
 }
@@ -23,13 +23,13 @@ int memset(char *dst, unsigned char value, unsigned int n)
 int memcmp(char *p1, char *p2, unsigned int size)
 {
     int i;
-    
+
     for (i = 0; i < size; i++)
         if (p1[i] != p2[i])
         {
             return 1;
         }
-        
+
     return 0;
 }
 
@@ -40,15 +40,15 @@ void int_toStr(char *str, int num, int base)
         case 2:
             int_toStrBinary(str, num);
             break;
-            
+
         case 10:
             int_toStrDec(str, num);
             break;
-            
+
         case 16:
             int_toStrHex(str, num);
             break;
-            
+
         default:
             int_toStrDec(str, num);
             break;
@@ -60,7 +60,7 @@ void int_toStrDec(char *str, unsigned int num)
     unsigned int temp;
     int digitCount = 0;
     int i;
-    
+
     if (num == 0)
     {
         digitCount = 1;
@@ -74,14 +74,14 @@ void int_toStrDec(char *str, unsigned int num)
             temp /= 10;
             digitCount++;
         }
-    
+
         for (i = 0; i < digitCount; i++)
         {
             str[digitCount - i - 1] = num % 10 + '0';
             num /= 10;
         }
     }
-        
+
     str[digitCount] = 0;
 }
 
@@ -92,7 +92,7 @@ void int_toStrHex(char *str, unsigned int num)
     int digit;
     unsigned int temp;
     int i;
-    
+
     if (num == 0)
     {
         digitCount = 1;
@@ -106,7 +106,7 @@ void int_toStrHex(char *str, unsigned int num)
             temp >>= 4;
             digitCount++;
         }
-    
+
         for (i = 0; i < digitCount; i++)
         {
             digit = num & 0xF;
@@ -114,7 +114,7 @@ void int_toStrHex(char *str, unsigned int num)
             str[digitCount - i - 1] = hex[digit];
         }
     }
-    
+
     str[digitCount] = 0;
 }
 
@@ -123,26 +123,26 @@ void int_toStrBinary(char *str, unsigned int num)
     unsigned int temp;
     int digitCount = 0;
     int i;
-    
+
     temp = num;
     while (temp > 0)
     {
         temp >>= 1;
         digitCount++;
     }
-    
+
     if (num == 0)
         digitCount = 8;
-    
+
     if (digitCount % 8 != 0)
         digitCount += 8 - (digitCount % 8);
-        
+
     for (i = 0; i < digitCount; i++)
         {
             str[digitCount - i - 1] = (num & 1) + '0';
-            num >>= 1;           
+            num >>= 1;
         }
-        
+
     str[digitCount] = 0;
 }
 
@@ -153,10 +153,10 @@ unsigned int str_toIntHex(char *str)
     unsigned int pos;
     unsigned int digit;
     unsigned int res = 0;
-    
+
     if (memcmp(str, "0x", 2) == 0)
         offset += 2;
-        
+
     for (i = offset; i < strlen(str); i++)
     {
         pos = (unsigned int) strchr(HEX_DIGITS, str[i]);
@@ -165,14 +165,14 @@ unsigned int str_toIntHex(char *str)
         digit = pos - (unsigned int) HEX_DIGITS;
         res = (res << 4) | digit;
     }
-    
+
     return res;
 }
 
 int strlen(char *str)
 {
     int i = 0;
-    
+
     while (str[i] != 0)
         i++;
     return i;
@@ -186,7 +186,7 @@ int strcmp(char *p1, char *p2)
 void strcpy(char *dst, char *src)
 {
     unsigned int length;
-    
+
     length = strlen(src);
     memcpy(dst, src, length);
     dst[length] = 0;
@@ -200,7 +200,7 @@ char *strstr(char *str1, char *str2)
     for (i = 0; i < strlen(str1); i++)
         if (memcmp(str1 + i, str2, strlen(str2)) == 0)
             return (char*)(str1 + i);
-            
+
     return (char*)NULL;
 }
 
@@ -208,11 +208,11 @@ char *strstr(char *str1, char *str2)
 char *strchr(char *str, char c)
 {
     int i;
-    
+
     for (i = 0; i < strlen(str); i++)
         if (str[i] == c)
             return (char*) (str + i);
-            
+
     return (char*) NULL;
 }
 

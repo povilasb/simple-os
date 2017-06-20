@@ -4,7 +4,7 @@
 void start()
 {
     char *line;
-    
+
     uprintf("Program to demonstrate input\n");
     line = umalloc(256);
     uprintf("Hex number: ");

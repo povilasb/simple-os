@@ -8,10 +8,10 @@ unsigned char keyboardBufferPos = 0;
 void init_keyboard()
 {
     int i;
-    
+
     for (i = 0; i < sizeof(symbolTable); i++)
         symbolTable[i] = UNKNOWN_SYMBOL;
-        
+
     symbolTable[0x2] = '1'; symbolTable[0x3] = '2'; symbolTable[0x4] = '3';
     symbolTable[0x5] = '4'; symbolTable[0x6] = '5'; symbolTable[0x7] = '6';
     symbolTable[0x8] = '7'; symbolTable[0x9] = '8'; symbolTable[0xA] = '9';
@@ -39,12 +39,12 @@ char scancode_toSymbol(unsigned char scanCode)
 void key_pressed(unsigned char scanCode)
 {
     char symbol;
-    
+
     symbol = scancode_toSymbol(scanCode);
     kprintf("%c", symbol);
     keyboardBuffer[keyboardBufferPos] = symbol;
     keyboardBufferPos++;
-    
+
     //create input line resource
     if (symbol == '\n')
     {
