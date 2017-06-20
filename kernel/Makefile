@@ -16,7 +16,7 @@ main.o: main.c stdlib/stdio.c stdlib/stdlib.c pmode/descriptorTables.c pmode/irq
 	./userPrograms/binToHeader.lexe userPrograms/prog1.bin
 	./userPrograms/binToHeader.lexe userPrograms/error.bin
 	./userPrograms/binToHeader.lexe userPrograms/input.bin
-	gcc -fno-builtin -fno-stack-protector -c main.c stdlib/stdio.c stdlib/stdlib.c pmode/descriptorTables.c pmode/irq.c kernel/processScheduler.c \
+	gcc -m32 -fno-builtin -fno-stack-protector -c main.c stdlib/stdio.c stdlib/stdlib.c pmode/descriptorTables.c pmode/irq.c kernel/processScheduler.c \
     kernel/kernelHeap.c stdlib/queue.c kernel/fileSystem.c pmode/paging.c kernel/resourceManager.c kernel/syscalls.c pmode/keyboard.c stdlib/stack.c
 
 pmode/interrupts.o: pmode/interrupts.asm
