@@ -14,7 +14,7 @@ unsigned char programIdleProcess[] =
 
 unsigned char programProg1[] =
 {
-    #include "../userPrograms/Prog1.h"
+    #include "../userPrograms/prog1.h"
 };
 
 unsigned char programError[] =
