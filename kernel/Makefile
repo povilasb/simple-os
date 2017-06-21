@@ -37,4 +37,4 @@ clean:
 
 .PHONY: qemu
 qemu:
-	qemu-system-x86_64 -fda sos.img2
+	qemu-system-x86_64 -fda sos.img
