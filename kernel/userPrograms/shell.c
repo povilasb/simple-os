@@ -41,10 +41,10 @@ int start()
 void print_help()
 {
     uprintf("--------------------------------------------\n");
-    uprintf("Galimos komandos:\n");
-    uprintf("help - parodo si teksta\n");
-    uprintf("exec fileName - paleidzia programa\n");
-    uprintf("kill pid - sunaikinamas procesas\n");
-    uprintf("all - spausdinamas visu procesu sarasas\n");
+    uprintf("All commands:\n");
+    uprintf("help - show this text\n");
+    uprintf("exec file_name - run the specified program\n");
+    uprintf("kill pid - kills process\n");
+    uprintf("all - list all processes\n");
     uprintf("--------------------------------------------\n");
 }
