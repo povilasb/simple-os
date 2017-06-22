@@ -7,6 +7,8 @@ that runs on x86 machines. It was implemented as a university task.
 
 Currently it only runs in 32bit mode.
 
+.. image:: sos.png
+
 Similar projects
 ================
 
