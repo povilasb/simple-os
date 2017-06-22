@@ -168,6 +168,7 @@ void process_loadContext(PID pid)
             remote_mapPage(i * FRAME_SIZE, pid->memoryPages[i]);
         }
 
+    pages_refresh();
     //kprintf("load: %s %x\n", pid->processName, pid->pid);
 
     kernelESP = 0x6504FE0;

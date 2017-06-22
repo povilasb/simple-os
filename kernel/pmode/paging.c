@@ -202,3 +202,8 @@ void remote_mapPage(unsigned int virtualAddr, unsigned int physicalAddr)
 {
     map_page(pageDirectory, virtualAddr, physicalAddr);
 }
+
+void pages_refresh()
+{
+    set_pageDirectory(pageDirectory);
+}
