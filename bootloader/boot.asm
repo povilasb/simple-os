@@ -82,10 +82,16 @@ read_kernel:
 
     mov si, read_sectors_err_msg
     call print_bios
+    jmp fatal_error
 
     read_kernel_end:
         popa
 ret
+
+fatal_error:
+    cli
+    halt
+    jmp fatal_error
 
 
 boot_disk: db 0
