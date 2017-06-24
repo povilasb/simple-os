@@ -37,4 +37,4 @@ clean:
 
 .PHONY: qemu
 qemu:
-	qemu-system-i386 -fda sos.img
+	qemu-system-i386 -usb -usbdevice disk:sos.img
