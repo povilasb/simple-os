@@ -90,6 +90,7 @@ ret
 
 boot_disk: db 0
 welcome_msg db "SOS 2011 bootloader", 13, 10, 0
+kernel_stack_pointer dd 0x6504FFF
 
 START:
     mov [boot_disk], dl ; BIOS fills dl with disk number
@@ -120,18 +121,21 @@ START:
     mov gs, ax
     mov fs, ax
     mov ss, ax
-    mov esp, [KERNEL_STACK_POINTER]
+    mov esp, [kernel_stack_pointer]
     jmp 0x8:protected_modeStart
+
+
+kernel_start_address dd 0x6400000
 
 [BITS 32]
 protected_modeStart:
-    mov edi, [KERNEL_START_ADDR] ;kernel memory
+    mov edi, [kernel_start_address] ;kernel memory
     mov esi, 0x7E00   ;kernel source code
     mov ecx, 0xFE00   ; 127 * 512 bytes
     rep movsb
 
     cli
-    jmp [KERNEL_START_ADDR]
+    jmp [kernel_start_address]
 
 print_bios:
     pusha
@@ -146,9 +150,6 @@ print_bios:
     print_loopEnd:
     popa
 ret
-
-KERNEL_START_ADDR dd 0x6400000
-KERNEL_STACK_POINTER dd 0x6504FFF
 
 gdt_start:
 
