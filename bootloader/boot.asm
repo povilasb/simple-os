@@ -4,20 +4,6 @@ ORG 0x7C00
 
 jmp START
 
-print_bios:
-    pusha
-    print_loop:
-        lodsb
-        or al, al  ;set ZF
-        jz print_loopEnd
-        mov ah, 0x0E
-        int 0x10
-        jmp print_loop
-
-    print_loopEnd:
-    popa
-ret
-
 a20_enable:
     pusha
     cli
@@ -71,152 +57,56 @@ a20_waitInput: ;wait until keyboard input buffer isn't empty
     popa
 ret
 
-;reading to [es:bx]
-read_kernel1:
-    pusha
-    mov ah, 2 ;read sector into memory
-    mov al, 17 ;number of sectors
-    mov ch, 0 ;cylinder
-    mov cl, 2 ;sector
-    mov dh, 0 ;head
-    mov dl, [externalDiskDrive] ;floppy drive number
-    int 0x13
-    jnc read_kernel1End
 
-    mov si, floppyErrorMsg
+read_sectors_err_msg: db "ERR: read_sectors", 13, 10, 0
+dapack:
+        db 0x10
+        db 0
+.count: dw 0 ; int 13 resets this to # of blocks actually read/written
+.buf:   dw 0 ; memory buffer destination address
+.seg:   dw 0 ; in memory page zero
+.addr:  dq 1 ; skip 1st disk sector which is bootloader, which is loaded by BIOS
+
+read_kernel:
+    pusha
+    mov ax, 127
+    mov [dapack.count], ax
+    mov ax, 0x7E00
+    mov [dapack.buf], ax
+
+    mov dl, [boot_disk]
+    mov si, dapack
+    mov ah, 0x42
+    int 0x13
+    jnc read_kernel_end
+
+    mov si, read_sectors_err_msg
     call print_bios
 
-    read_kernel1End:
+    read_kernel_end:
         popa
-        add bx, 0x2200 ;bx = bx + 512 * 17
 ret
 
-;reading to [es:bx]
-read_kernel2:
-    pusha
-    mov ah, 2 ;read sector into memory
-    mov al, 18 ;number of sectors
-    mov ch, 0 ;cylinder
-    mov cl, 1 ;sector
-    mov dh, 1 ;head
-    mov dl, [externalDiskDrive] ;floppy drive number
-    int 0x13
-    jnc read_kernel2End
 
-    mov si, floppyErrorMsg
-    call print_bios
-
-    read_kernel2End:
-        popa
-        add bx, 0x2400 ;bx = bx + 512 * 18
-ret
-
-;reading to [es:bx]
-read_kernel3:
-    pusha
-    mov ah, 2 ;read sector into memory
-    mov al, 18 ;number of sectors
-    mov ch, 1 ;cylinder
-    mov cl, 1 ;sector
-    mov dh, 0 ;head
-    mov dl, [externalDiskDrive] ;floppy drive number
-    int 0x13
-    jnc read_kernel3End
-
-    mov si, floppyErrorMsg
-    call print_bios
-
-    read_kernel3End:
-        popa
-        add bx, 0x2400 ;bx = bx + 512 * 18
-ret
-
-;reading to [es:bx]
-read_kernel4:
-    pusha
-    mov ah, 2 ;read sector into memory
-    mov al, 18 ;number of sectors
-    mov ch, 1 ;cylinder
-    mov cl, 1 ;sector
-    mov dh, 1 ;head
-    mov dl, [externalDiskDrive] ;floppy drive number
-    int 0x13
-    jnc read_kernel4End
-
-    mov si, floppyErrorMsg
-    call print_bios
-
-    read_kernel4End:
-        popa
-        add bx, 0x2400 ;bx = bx + 512 * 18
-ret
-
-;reading to [es:bx]
-read_kernel5:
-    pusha
-    mov ah, 2 ;read sector into memory
-    mov al, 18 ;number of sectors
-    mov ch, 2 ;cylinder
-    mov cl, 1 ;sector
-    mov dh, 0 ;head
-    mov dl, [externalDiskDrive] ;floppy drive number
-    int 0x13
-    jnc read_kernel5End
-
-    mov si, floppyErrorMsg
-    call print_bios
-
-    read_kernel5End:
-        popa
-        add bx, 0x2400 ;bx = bx + 512 * 18
-ret
-
-;reading to [es:bx]
-read_kernel6:
-    pusha
-    mov ah, 2 ;read sector into memory
-    mov al, 18 ;number of sectors
-    mov ch, 2 ;cylinder
-    mov cl, 1 ;sector
-    mov dh, 1 ;head
-    mov dl, [externalDiskDrive] ;floppy drive number
-    int 0x13
-    jnc read_kernel6End
-
-    mov si, floppyErrorMsg
-    call print_bios
-
-    read_kernel6End:
-        popa
-        add bx, 0x2400 ;bx = bx + 512 * 18
-ret
+boot_disk: db 0
+welcome_msg db "SOS 2011 bootloader", 13, 10, 0
+kernel_stack_pointer dd 0x6504FFF
 
 START:
+    mov [boot_disk], dl ; BIOS fills dl with disk number
+
     xor ax, ax ;ax = 0
     mov es, ax
     mov ds, ax
     mov ss, ax
     mov sp, 0x700 ;stack 512 bytes
 
-    ;mov si, welcomeMsg
-    ;call print_bios
+    mov si, welcome_msg
+    call print_bios
 
     call a20_enable
 
-    mov bx, 0x7E00
-    call read_kernel4
-    call read_kernel5
-    call read_kernel6
-
-    mov edi, 0x500
-    mov esi, 0x7E00    ;kernel source code
-    mov ecx, 0x6C00     ;27 kB
-    rep movsb
-
-    mov bx, 0x7E00
-    call read_kernel1
-    call read_kernel2
-    call read_kernel3
+    call read_kernel
 
     cli
     lgdt [gdt_desc]
@@ -231,30 +121,35 @@ START:
     mov gs, ax
     mov fs, ax
     mov ss, ax
-    mov esp, [KERNEL_STACK_POINTER]
+    mov esp, [kernel_stack_pointer]
     jmp 0x8:protected_modeStart
+
+
+kernel_start_address dd 0x6400000
 
 [BITS 32]
 protected_modeStart:
-    mov edi, [KERNEL_START_ADDR] ;kernel memory
+    mov edi, [kernel_start_address] ;kernel memory
     mov esi, 0x7E00   ;kernel source code
-    mov ecx, 0x6A00     ;26,5 kB
-    rep movsb
-
-    mov esi, 0x500
-    mov ecx, 0x6C00 ;27 kB
+    mov ecx, 0xFE00   ; 127 * 512 bytes
     rep movsb
 
     cli
-    jmp [KERNEL_START_ADDR]
+    jmp [kernel_start_address]
 
+print_bios:
+    pusha
+    print_loop:
+        lodsb
+        or al, al  ;set ZF
+        jz print_loopEnd
+        mov ah, 0x0E
+        int 0x10
+        jmp print_loop
 
-externalDiskDrive db 0x0
-welcomeMsg db "SOS 2011 bootloader", 13, 10, 0
-floppyErrorMsg db "Error reading kernel from floppy!", 13, 10, 0
-
-KERNEL_START_ADDR dd 0x6400000
-KERNEL_STACK_POINTER dd 0x6504FFF
+    print_loopEnd:
+    popa
+ret
 
 gdt_start:
 
