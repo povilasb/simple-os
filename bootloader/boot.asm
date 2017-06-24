@@ -4,20 +4,6 @@ ORG 0x7C00
 
 jmp START
 
-print_bios:
-    pusha
-    print_loop:
-        lodsb
-        or al, al  ;set ZF
-        jz print_loopEnd
-        mov ah, 0x0E
-        int 0x10
-        jmp print_loop
-
-    print_loopEnd:
-    popa
-ret
-
 a20_enable:
     pusha
     cli
@@ -71,6 +57,16 @@ a20_waitInput: ;wait until keyboard input buffer isn't empty
     popa
 ret
 
+
+read_sectors_err_msg: db "ERR: read_sectors", 13, 10, 0
+dapack:
+        db 0x10
+        db 0
+.count: dw 0 ; int 13 resets this to # of blocks actually read/written
+.buf:   dw 0 ; memory buffer destination address
+.seg:   dw 0 ; in memory page zero
+.addr:  dq 1 ; skip 1st disk sector which is bootloader, which is loaded by BIOS
+
 read_kernel:
     pusha
     mov ax, 127
@@ -91,6 +87,8 @@ read_kernel:
         popa
 ret
 
+
+boot_disk: db 0
 START:
     mov [boot_disk], dl ; BIOS fills dl with disk number
 
@@ -130,22 +128,24 @@ protected_modeStart:
     cli
     jmp [KERNEL_START_ADDR]
 
-externalDiskDrive db 0x0
+print_bios:
+    pusha
+    print_loop:
+        lodsb
+        or al, al  ;set ZF
+        jz print_loopEnd
+        mov ah, 0x0E
+        int 0x10
+        jmp print_loop
+
+    print_loopEnd:
+    popa
+ret
+
 ; welcomeMsg db "SOS 2011 bootloader", 13, 10, 0
 floppyErrorMsg db "Error reading kernel from floppy!", 13, 10, 0
 
-read_sectors_err_msg: db "ERR: read_sectors", 13, 10, 0
 boot_device_msg: db "Device nr: ", 0
-
-boot_disk: db 0
-
-dapack:
-        db 0x10
-        db 0
-.count: dw 0 ; int 13 resets this to # of blocks actually read/written
-.buf:   dw 0 ; memory buffer destination address
-.seg:   dw 0 ; in memory page zero
-.addr:  dq 1 ; skip 1st disk sector which is bootloader, which is loaded by BIOS
 
 KERNEL_START_ADDR dd 0x6400000
 KERNEL_STACK_POINTER dd 0x6504FFF
