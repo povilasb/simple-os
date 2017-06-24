@@ -89,6 +89,8 @@ ret
 
 
 boot_disk: db 0
+welcome_msg db "SOS 2011 bootloader", 13, 10, 0
+
 START:
     mov [boot_disk], dl ; BIOS fills dl with disk number
 
@@ -97,6 +99,9 @@ START:
     mov ds, ax
     mov ss, ax
     mov sp, 0x700 ;stack 512 bytes
+
+    mov si, welcome_msg
+    call print_bios
 
     call a20_enable
 
@@ -141,9 +146,6 @@ print_bios:
     print_loopEnd:
     popa
 ret
-
-; welcomeMsg db "SOS 2011 bootloader", 13, 10, 0
-; boot_device_msg: db "Device nr: ", 0
 
 KERNEL_START_ADDR dd 0x6400000
 KERNEL_STACK_POINTER dd 0x6504FFF
