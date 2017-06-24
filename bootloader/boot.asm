@@ -143,9 +143,7 @@ print_bios:
 ret
 
 ; welcomeMsg db "SOS 2011 bootloader", 13, 10, 0
-floppyErrorMsg db "Error reading kernel from floppy!", 13, 10, 0
-
-boot_device_msg: db "Device nr: ", 0
+; boot_device_msg: db "Device nr: ", 0
 
 KERNEL_START_ADDR dd 0x6400000
 KERNEL_STACK_POINTER dd 0x6504FFF
