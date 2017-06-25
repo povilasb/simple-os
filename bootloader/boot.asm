@@ -2,7 +2,7 @@
 
 ORG 0x7C00
 
-jmp START
+jmp 0x0000:START
 
 a20_enable:
     pusha
