@@ -4,6 +4,7 @@
 
 #include "stack.h"
 #include "stdlib.h"
+#include "stdio.h"
 #include "../kernel/kernelHeap.h"
 
 void init_stack(Stack *s)
@@ -15,7 +16,7 @@ int stack_push(Stack *s, void *data)
 {
     StackElement *stackE;
 
-    stackE = kmalloc(sizeof(StackElement));
+    stackE = (StackElement*)kmalloc(sizeof(StackElement));
     if (stackE == NULL)
         return 0; //failure
 
@@ -48,7 +49,7 @@ int stack_removeElement(Stack *s, void *data)
 
     temp = s->head;
     if (temp == NULL)
-        return;
+        return FALSE;
 
     if (temp->data == data)
     {

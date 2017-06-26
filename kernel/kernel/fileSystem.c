@@ -29,31 +29,11 @@ unsigned char programInput[] =
 
 FileNode fileList[] =
 {
-    {
-        .name = "shell.exe",
-        .data = programShell,
-        .size = sizeof(programShell)
-    },
-    {
-        .name = "IdleProcess.exe",
-        .data = programIdleProcess,
-        .size = sizeof(programIdleProcess)
-    },
-    {
-        .name = "prog1.exe",
-        .data = programProg1,
-        .size = sizeof(programProg1)
-    },
-    {
-        .name = "error.exe",
-        .data = programError,
-        .size = sizeof(programError)
-    },
-    {
-        .name = "input.exe",
-        .data = programInput,
-        .size = sizeof(programInput)
-    }
+    { "shell.exe", sizeof(programShell), programShell },
+    { "IdleProcess.exe", sizeof(programIdleProcess), programIdleProcess },
+    { "prog1.exe", sizeof(programProg1), programProg1 },
+    { "error.exe", sizeof(programError), programError },
+    { "input.exe", sizeof(programInput), programInput }
 };
 
 unsigned int filesCount = sizeof(fileList) / sizeof(FileNode);

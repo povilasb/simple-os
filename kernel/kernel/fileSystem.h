@@ -10,4 +10,6 @@ typedef struct
 
 FileNode *find_file(char *fileName);
 
+void init_fileSystem();
+
 #endif

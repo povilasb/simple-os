@@ -102,7 +102,7 @@ PID create_process(char *processName)
     int i;
     int progPageCount = 0; //pages for program text
 
-    pcb = kmalloc(sizeof(PCB));
+    pcb = (PCB*)kmalloc(sizeof(PCB));
     if (pcb == NULL)
         return 0;
 
@@ -282,7 +282,7 @@ void keyboard_createResource(char *line)
     int i;
 
     //remove process from waiting queues
-    pid  = stack_pop(&waitingKeyboardProcesses);
+    pid = (PID)stack_pop(&waitingKeyboardProcesses);
     if (pid != NULL)
     {
         while (queue_removeElement(&waitingProcesses, (void*)pid->pid)){}
