@@ -2,6 +2,7 @@
 #include "stdlib/stdlib.h"
 #include "pmode/descriptorTables.h"
 #include "pmode/irq.h"
+#include "pmode/keyboard.h"
 #include "kernel/processScheduler.h"
 #include "kernel/kernelHeap.h"
 #include "pmode/paging.h"
