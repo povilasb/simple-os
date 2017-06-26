@@ -16,7 +16,7 @@ int queue_add(Queue *queue, void *data)
 {
     QueueElement *element;
 
-    element = kmalloc(sizeof(QueueElement));
+    element = (QueueElement*)kmalloc(sizeof(QueueElement));
     if (element == NULL)
         return 0; //failure
 
@@ -61,7 +61,7 @@ int queue_removeElement(Queue *queue, void *data)
 
     temp = queue->front;
     if (temp == NULL)
-        return;
+        return FALSE;
 
     if (temp->data == data)
     {
