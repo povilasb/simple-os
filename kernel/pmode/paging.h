@@ -65,4 +65,9 @@ void map_page(PageDirectory *pageDir, unsigned int virtualAddr, unsigned int phy
 void unmap_page(unsigned int virtualAddr);
 void remote_mapPage(unsigned int virtualAddr, unsigned int physicalAddr);
 
+/**
+ * Flush page table cache.
+ */
+void pages_refresh();
+
 #endif
