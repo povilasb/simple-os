@@ -6,7 +6,7 @@ MemoryResource *create_memoryResource(unsigned int size)
 {
     MemoryResource *memRes;
 
-    memRes = kmalloc(sizeof(MemoryResource));
+    memRes = (MemoryResource*)kmalloc(sizeof(MemoryResource));
 
     return memRes;
 }
