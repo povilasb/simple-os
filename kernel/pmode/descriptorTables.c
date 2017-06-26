@@ -6,16 +6,21 @@
 #include "../kernel/processScheduler.h"
 #include "keyboard.h"
 
-extern void isr0xUnknown();
-extern void isr0x80(void);
-extern void isr0x20(void);
-extern void isr0x21(void);
-extern void isr0x8(void); //double fault
-extern void isr0xB(void); //segment not present
-extern void isr0xC(void); //stack fault
-extern void isr0xD(void); //general protection fault
-extern void isr0xE(void); //page fault
-extern void isr0xF(void); //unknown interrupt
+extern "C"
+{
+
+void isr0xUnknown();
+void isr0x80(void);
+void isr0x20(void);
+void isr0x21(void);
+void isr0x8(void); //double fault
+void isr0xB(void); //segment not present
+void isr0xC(void); //stack fault
+void isr0xD(void); //general protection fault
+void isr0xE(void); //page fault
+void isr0xF(void); //unknown interrupt
+
+}
 
 GDTDescriptor gdtDesc;
 GDTEntry GDT[5];
