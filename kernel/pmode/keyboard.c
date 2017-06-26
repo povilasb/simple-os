@@ -1,8 +1,9 @@
 #include "keyboard.h"
 #include "../stdlib/stdio.h"
+#include "../kernel/processScheduler.h"
 
 unsigned char symbolTable[256];
-unsigned char keyboardBuffer[256];
+char keyboardBuffer[256];
 unsigned char keyboardBufferPos = 0;
 
 void init_keyboard()
