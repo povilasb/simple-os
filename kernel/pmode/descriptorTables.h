@@ -55,7 +55,10 @@ void init_idt();
 void load_idt(IDTDescriptor *idtd);
 
 //interrupt handlers
-void int0xUnknown_handler();
+extern "C"
+{
+
+void int0xUnknown_handler(IntRegisters regs);
 void int0x80_handler(IntRegisters regs);
 void int0x20_handler(IntRegisters regs);
 void int0x21_handler(IntRegisters regs);
@@ -65,5 +68,7 @@ void int0xC_handler();
 void int0xD_handler();
 void int0xE_handler(unsigned int faultingAddr);
 void int0xF_handler();
+
+}
 
 #endif
