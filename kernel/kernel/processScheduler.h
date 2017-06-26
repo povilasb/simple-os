@@ -27,7 +27,7 @@ typedef struct
 
 typedef struct
 {
-    unsigned char processName[32];
+    char processName[32];
     unsigned char processState;
     unsigned int pid;
     unsigned char priority;
