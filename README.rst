@@ -9,6 +9,13 @@ Currently it only runs in 32bit mode.
 
 .. image:: sos.png
 
+Build requirements
+==================
+
+::
+
+    $ apt install g++ xxd make nasm
+
 Similar projects
 ================
 

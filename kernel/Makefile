@@ -20,11 +20,6 @@ all: user_programs $(obj_files) pmode/interrupts.o
 .PHONY: user_programs
 user_programs:
 	make -C user-programs
-	./user-programs/binToHeader.lexe user-programs/shell.bin
-	./user-programs/binToHeader.lexe user-programs/IdleProcess.bin
-	./user-programs/binToHeader.lexe user-programs/prog1.bin
-	./user-programs/binToHeader.lexe user-programs/error.bin
-	./user-programs/binToHeader.lexe user-programs/input.bin
 
 pmode/interrupts.o: pmode/interrupts.asm
 	nasm -f elf pmode/interrupts.asm
