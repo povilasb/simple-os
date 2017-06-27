@@ -2,38 +2,19 @@
 #include "../stdlib/stdio.h"
 #include "../stdlib/stdlib.h"
 
-unsigned char programShell[] =
-{
-    #include "../user-programs/shell.h"
-};
-
-unsigned char programIdleProcess[] =
-{
-    #include "../user-programs/IdleProcess.h"
-};
-
-unsigned char programProg1[] =
-{
-    #include "../user-programs/prog1.h"
-};
-
-unsigned char programError[] =
-{
-    #include "../user-programs/error.h"
-};
-
-unsigned char programInput[] =
-{
-    #include "../user-programs/input.h"
-};
+#include "../user-programs/shell.bin.h"
+#include "../user-programs/IdleProcess.bin.h"
+#include "../user-programs/prog1.bin.h"
+#include "../user-programs/error.bin.h"
+#include "../user-programs/input.bin.h"
 
 FileNode fileList[] =
 {
-    { "shell.exe", sizeof(programShell), programShell },
-    { "IdleProcess.exe", sizeof(programIdleProcess), programIdleProcess },
-    { "prog1.exe", sizeof(programProg1), programProg1 },
-    { "error.exe", sizeof(programError), programError },
-    { "input.exe", sizeof(programInput), programInput }
+    { "shell.exe", sizeof(shell_bin), shell_bin },
+    { "IdleProcess.exe", sizeof(IdleProcess_bin), IdleProcess_bin },
+    { "prog1.exe", sizeof(prog1_bin), prog1_bin },
+    { "error.exe", sizeof(error_bin), error_bin },
+    { "input.exe", sizeof(input_bin), input_bin }
 };
 
 unsigned int filesCount = sizeof(fileList) / sizeof(FileNode);
