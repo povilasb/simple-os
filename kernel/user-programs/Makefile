@@ -1,7 +1,18 @@
 CXXFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -fno-pic
 LDFLAGS = --Ttext 0x0 --oformat binary -m elf_i386
 
-all: shell.bin IdleProcess.bin prog1.bin error.bin input.bin
+programs = shell IdleProcess prog1 error input
+header_files = $(programs:=.bin.h)
+bin_files = $(programs:=.bin)
+
+all: $(header_files)
+
+.PHONY: clean
+clean:
+	$(RM) $(header_files) $(bin_files)
+
+%.bin.h: %.bin
+	xxd -i $< $@
 
 %.bin: %.o systemFunc.o ../stdlib/stdlib.o
 	ld $(LDFLAGS) $^ -o $@
