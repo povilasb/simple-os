@@ -15,6 +15,7 @@ void int_toStr(char *str, int num, int base);
 void int_toStrDec(char *str, unsigned int num);
 void int_toStrHex(char *str, unsigned int num);
 void int_toStrBinary(char *str, unsigned int num);
+unsigned int str_toIntHex(char *str);
 void va_stringf(char *strDest, char *strFormat, va_list list);
 
 int strlen(char *str);

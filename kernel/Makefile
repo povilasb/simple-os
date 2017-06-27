@@ -20,20 +20,19 @@ all: user_programs $(obj_files) pmode/interrupts.o
 
 .PHONY: user_programs
 user_programs:
-	./userPrograms/binToHeader.lexe userPrograms/shell.bin
-	./userPrograms/binToHeader.lexe userPrograms/IdleProcess.bin
-	./userPrograms/binToHeader.lexe userPrograms/prog1.bin
-	./userPrograms/binToHeader.lexe userPrograms/error.bin
-	./userPrograms/binToHeader.lexe userPrograms/input.bin
+	make -C user-programs
+	./user-programs/binToHeader.lexe user-programs/shell.bin
+	./user-programs/binToHeader.lexe user-programs/IdleProcess.bin
+	./user-programs/binToHeader.lexe user-programs/prog1.bin
+	./user-programs/binToHeader.lexe user-programs/error.bin
+	./user-programs/binToHeader.lexe user-programs/input.bin
 
 pmode/interrupts.o: pmode/interrupts.asm
 	nasm -f elf pmode/interrupts.asm
 
+.PHONY: clean
 clean:
-	rm -f *.o ; \
-	rm -f pmode/*.o ; \
-	rm -f stdlib/*.o ; \
-    rm -f kernel/*.o
+	find -name '*.o' | xargs $(RM)
 
 .PHONY: qemu
 qemu:

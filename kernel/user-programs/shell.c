@@ -11,7 +11,7 @@ int start()
     unsigned int temp;
 
     uprintf("----------System shell-----------\n");
-    line = umalloc(256);
+    line = (char*)umalloc(256);
 
     while (1)
     {
