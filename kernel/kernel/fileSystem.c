@@ -4,27 +4,27 @@
 
 unsigned char programShell[] =
 {
-    #include "../userPrograms/shell.h"
+    #include "../user-programs/shell.h"
 };
 
 unsigned char programIdleProcess[] =
 {
-    #include "../userPrograms/IdleProcess.h"
+    #include "../user-programs/IdleProcess.h"
 };
 
 unsigned char programProg1[] =
 {
-    #include "../userPrograms/prog1.h"
+    #include "../user-programs/prog1.h"
 };
 
 unsigned char programError[] =
 {
-    #include "../userPrograms/error.h"
+    #include "../user-programs/error.h"
 };
 
 unsigned char programInput[] =
 {
-    #include "../userPrograms/input.h"
+    #include "../user-programs/input.h"
 };
 
 FileNode fileList[] =
