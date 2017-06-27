@@ -30,11 +30,9 @@ user_programs:
 pmode/interrupts.o: pmode/interrupts.asm
 	nasm -f elf pmode/interrupts.asm
 
+.PHONY: clean
 clean:
-	rm -f *.o ; \
-	rm -f pmode/*.o ; \
-	rm -f stdlib/*.o ; \
-    rm -f kernel/*.o
+	find -name '*.o' | xargs $(RM)
 
 .PHONY: qemu
 qemu:
