@@ -5,10 +5,9 @@ src_files = main.c stdlib/stdio.c stdlib/stdlib.c pmode/descriptorTables.c \
 	stdlib/queue.c kernel/fileSystem.c pmode/paging.c \
 	kernel/resourceManager.c kernel/syscalls.c pmode/keyboard.c \
 	stdlib/stack.c
-
 obj_files = $(src_files:.c=.o)
 
-CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -fno-pic
+CXXFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -fno-pic
 
 all: user_programs $(obj_files) pmode/interrupts.o
 	ld --Ttext 0x6400000 -m elf_i386 -s --oformat binary $(obj_files) pmode/interrupts.o -o main.bin
@@ -16,7 +15,7 @@ all: user_programs $(obj_files) pmode/interrupts.o
 	cat ../bootloader/boot.bin main.bin /dev/zero | head -c 1474560 > sos.img
 
 %.o: %.c
-	gcc $(CFLAGS) -c $^ -o $@
+	$(CXX) $(CXXFLAGS) -c $^ -o $@
 
 .PHONY: user_programs
 user_programs:
