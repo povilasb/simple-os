@@ -4,10 +4,8 @@
 
 void start()
 {
-    char *line;
-
     uprintf("Program to demonstrate input\n");
-    line = (char*)umalloc(256);
+    auto line = static_cast<char*>(umalloc(256));
     uprintf("Hex number: ");
     ureadln(line);
     uprintf("Dec number: %d\n", str_toIntHex(line));
