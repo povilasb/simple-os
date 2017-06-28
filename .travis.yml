@@ -1,0 +1,17 @@
+language: cpp
+
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-6
+    - vim-common
+    - nasm
+
+env:
+  - COMPILER_EVAL="CC=gcc-6 && CXX=g++-6"
+
+script:
+  - eval "${COMPILER_EVAL}"
+  - make -C kernel
