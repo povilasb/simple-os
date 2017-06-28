@@ -2,6 +2,8 @@
 About
 =====
 
+.. image:: https://travis-ci.org/povilasb/simple-os.svg?branch=master
+
 SOS (Simple Operating System) is a very basic multiprocess operating system
 that runs on x86 machines. It was implemented as a university task.
 
