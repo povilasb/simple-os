@@ -1,4 +1,5 @@
-CXXFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -fno-pic
+CXXFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
+	-fno-pic --std=c++14
 LDFLAGS = --Ttext 0x0 --oformat binary -m elf_i386
 
 programs = shell IdleProcess prog1 error input
