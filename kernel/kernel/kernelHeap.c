@@ -114,19 +114,3 @@ void kfree(void *addr)
 {
     heap_free(&kernelHeap, addr);
 }
-
-/*
-void *krealloc(void *addr, unsigned int size)
-{
-    void *newAddr;
-    HeapElement *heapElement;
-
-    heapElement = (HeapElement*)((int)addr - sizeof(HeapElement));
-
-    newAddr = kmalloc(size);
-    memcpy(newAddr, addr, heapElement->dataSize);
-    kfree(addr);
-
-    return newAddr;
-}
-*/

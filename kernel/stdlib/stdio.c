@@ -64,46 +64,6 @@ void kprint(char *str)
     consoleCursorPos = kprint_str(str, consoleCursorPos);
 }
 
-/*
-int kprint_str2(char *message, unsigned int line)
-{
-	unsigned int i = 0;
-    unsigned int j = 0;
-    char symb;
-
-	i = line * 80 * 2;
-
-	while(message[j] != 0)
-	{
-		if(message[j] =='\n') // check for a new line
-		{
-			line++;
-            if (line > SCREEN_LINE_COUNT - 1)
-            {
-                console_scroll(1);
-                line--;
-            }
-
-			i = line * 80 * 2;
-			j++;
-		}
-        else
-        {
-			kprint_symbol(message[j], i);
-			j++;
-			i = i + 2;
-		}
-	}
-
-    return line;
-}
-
-void kprint2(char *str)
-{
-    currentLine = kprint_str(str, currentLine);
-}
-*/
-
 void kprintf(char *str, ...)
 {
      char formatedStr[2048];
