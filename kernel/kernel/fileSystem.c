@@ -1,5 +1,4 @@
 #include "fileSystem.h"
-#include "../stdlib/stdio.h"
 #include "../stdlib/stdlib.h"
 
 #include "../user-programs/shell.bin.h"
@@ -24,13 +23,10 @@ void init_fileSystem()
 
 }
 
-FileNode *find_file(char *fileName)
+const FileNode* find_file(char *fileName)
 {
-    int i;
-
-    for (i = 0; i < filesCount; i++)
+    for (int i = 0; i < filesCount; i++)
         if (strcmp(fileList[i].name, fileName) == 0)
             return &fileList[i];
-
-    return (FileNode*)NULL;
+    return nullptr;
 }

@@ -7,7 +7,8 @@ src_files = main.c stdlib/stdio.c stdlib/stdlib.c pmode/descriptorTables.c \
 	stdlib/stack.c
 obj_files = $(src_files:.c=.o)
 
-CXXFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -fno-pic
+CXXFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
+	-fno-pic -std=c++14 -fno-rtti -fno-exceptions
 
 all: user_programs $(obj_files) pmode/interrupts.o
 	ld --Ttext 0x6400000 -m elf_i386 -s --oformat binary $(obj_files) pmode/interrupts.o -o main.bin
@@ -26,6 +27,7 @@ pmode/interrupts.o: pmode/interrupts.asm
 
 .PHONY: clean
 clean:
+	make -C user-programs clean
 	find -name '*.o' | xargs $(RM)
 
 .PHONY: qemu

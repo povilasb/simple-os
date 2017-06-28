@@ -64,7 +64,7 @@ void start_processScheduler()
 
 unsigned int load_process(unsigned int *pages, char *processName)
 {
-    FileNode *program;
+    const FileNode* program;
     int pageCount;
     int i, j;
     char *programText;
