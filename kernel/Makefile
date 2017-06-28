@@ -27,6 +27,7 @@ pmode/interrupts.o: pmode/interrupts.asm
 
 .PHONY: clean
 clean:
+	make -C user-programs clean
 	find -name '*.o' | xargs $(RM)
 
 .PHONY: qemu
