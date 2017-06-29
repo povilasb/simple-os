@@ -14,17 +14,13 @@ int memcpy(char *dst, const char* src, int n)
 
 int memset(char *dst, unsigned char value, unsigned int n)
 {
-    int i;
-
-    for (i = 0; i < n; i++)
+    for (auto i = 0u; i < n; i++)
         dst[i] = value;
 }
 
 int memcmp(const char *p1, const char* p2, unsigned int size)
 {
-    int i;
-
-    for (i = 0; i < size; i++)
+    for (auto i = 0u; i < size; i++)
         if (p1[i] != p2[i])
         {
             return 1;
