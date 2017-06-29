@@ -3,7 +3,7 @@
 #include "../stdlib/stdlib.h"
 #include "../kernel/syscalls.h"
 
-void uprintf(char *str, ...)
+void uprintf(const char *str, ...)
 {
     char formatedStr[2048];
     va_list list;
