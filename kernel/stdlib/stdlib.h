@@ -7,21 +7,21 @@
 #define TRUE 1
 #define FALSE 0
 
-int memcpy(char *dst, char *src, int n);
-int memset(char *dst, unsigned char value, unsigned int n);
-int memcmp(char *p1, char *p2, unsigned int size);
+void memcpy(char *dst, const char* src, unsigned int n);
+void memset(char *dst, unsigned char value, unsigned int n);
+int memcmp(const char* p1, const char* p2, unsigned int size);
 
 void int_toStr(char *str, int num, int base);
 void int_toStrDec(char *str, unsigned int num);
 void int_toStrHex(char *str, unsigned int num);
 void int_toStrBinary(char *str, unsigned int num);
 unsigned int str_toIntHex(char *str);
-void va_stringf(char *strDest, char *strFormat, va_list list);
+void va_stringf(char *strDest, const char* strFormat, va_list list);
 
-int strlen(char *str);
-int strcmp(char *p1, char *p2);
-void strcpy(char *dst, char *src);
-char *strstr(char *str1, char *str2);
-char *strchr(char *str, char c);
+int strlen(const char* str);
+int strcmp(const char* p1, const char* p2);
+void strcpy(char *dst, const char* src);
+const char *strstr(const char* str1, const char* str2);
+const char* strchr(const char *str, char c);
 
 #endif

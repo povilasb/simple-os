@@ -62,11 +62,11 @@ void start_processScheduler()
     process_loadContext(runningProcess);
 }
 
-unsigned int load_process(unsigned int *pages, char *processName)
+unsigned int load_process(unsigned int *pages, const char* processName)
 {
     const FileNode* program;
     int pageCount;
-    int i, j;
+    int i;
     char *programText;
     unsigned int bytesToCopy;
     unsigned int bytesCopied = 0;
@@ -86,7 +86,7 @@ unsigned int load_process(unsigned int *pages, char *processName)
         if (bytesToCopy > FRAME_SIZE)
             bytesToCopy = FRAME_SIZE;
 
-        for (j = 0; j < bytesToCopy; j++)
+        for (auto j = 0u; j < bytesToCopy; j++)
             programText[j] = program->data[i*FRAME_SIZE + j];
 
         bytesCopied += bytesToCopy;
@@ -96,7 +96,7 @@ unsigned int load_process(unsigned int *pages, char *processName)
     return pageCount;
 }
 
-PID create_process(char *processName)
+PID create_process(const char* processName)
 {
     PCB *pcb;
     int i;
@@ -278,7 +278,6 @@ void keyboard_askResource()
 void keyboard_createResource(char *line)
 {
     PID pid;
-    char *p;
     int i;
 
     //remove process from waiting queues

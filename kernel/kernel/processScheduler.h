@@ -42,8 +42,8 @@ void print_allProcesses();
 
 void init_processScheduler();
 void start_processScheduler();
-unsigned int load_process(unsigned int *pages, char *processName);
-PID create_process(char *processName);
+unsigned int load_process(unsigned int *pages, const char* processName);
+PID create_process(const char* processName);
 void resume_process(PID pid);
 void process_loadContext(PID pid);
 void process_saveContext(PID pid, IntRegisters *regs);

@@ -23,9 +23,9 @@ void init_fileSystem()
 
 }
 
-const FileNode* find_file(char *fileName)
+const FileNode* find_file(const char* fileName)
 {
-    for (int i = 0; i < filesCount; i++)
+    for (auto i = 0u; i < filesCount; i++)
         if (strcmp(fileList[i].name, fileName) == 0)
             return &fileList[i];
     return nullptr;

@@ -6,7 +6,6 @@ void print_help();
 
 int start()
 {
-    unsigned int timer = 0;
     char *line;
     unsigned int temp;
 

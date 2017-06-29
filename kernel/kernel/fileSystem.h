@@ -8,7 +8,7 @@ typedef struct
     unsigned char *data;
 } FileNode;
 
-const FileNode* find_file(char *fileName);
+const FileNode* find_file(const char* fileName);
 
 void init_fileSystem();
 

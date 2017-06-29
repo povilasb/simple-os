@@ -2,29 +2,23 @@
 #include "stdarg.h"
 #include "../kernel/kernelHeap.h"
 
-char HEX_DIGITS[] = "0123456789abcdef";
+const char HEX_DIGITS[] = "0123456789abcdef";
 
-int memcpy(char *dst, char *src, int n)
+void memcpy(char *dst, const char* src, unsigned int n)
 {
-    int i;
-
-    for (i = 0; i < n; i++)
+    for (auto i = 0u; i < n; i++)
         dst[i] = src[i];
 }
 
-int memset(char *dst, unsigned char value, unsigned int n)
+void memset(char *dst, unsigned char value, unsigned int n)
 {
-    int i;
-
-    for (i = 0; i < n; i++)
+    for (auto i = 0u; i < n; i++)
         dst[i] = value;
 }
 
-int memcmp(char *p1, char *p2, unsigned int size)
+int memcmp(const char *p1, const char* p2, unsigned int size)
 {
-    int i;
-
-    for (i = 0; i < size; i++)
+    for (auto i = 0u; i < size; i++)
         if (p1[i] != p2[i])
         {
             return 1;
@@ -87,7 +81,7 @@ void int_toStrDec(char *str, unsigned int num)
 
 void int_toStrHex(char *str, unsigned int num)
 {
-    char *hex = "0123456789ABCDEF";
+    const char *hex = "0123456789ABCDEF";
     int digitCount = 0;
     int digit;
     unsigned int temp;
@@ -169,7 +163,7 @@ unsigned int str_toIntHex(char *str)
     return res;
 }
 
-int strlen(char *str)
+int strlen(const char* str)
 {
     int i = 0;
 
@@ -178,12 +172,12 @@ int strlen(char *str)
     return i;
 }
 
-int strcmp(char *p1, char *p2)
+int strcmp(const char* p1, const char* p2)
 {
     return memcmp(p1, p2, strlen(p1));
 }
 
-void strcpy(char *dst, char *src)
+void strcpy(char *dst, const char* src)
 {
     unsigned int length;
 
@@ -193,19 +187,19 @@ void strcpy(char *dst, char *src)
 }
 
 //Returns a pointer to the first occurrence of str2 in str1, or a null pointer if str2 is not part of str1.
-char *strstr(char *str1, char *str2)
+const char *strstr(const char* str1, const char* str2)
 {
     int i;
 
     for (i = 0; i < strlen(str1); i++)
         if (memcmp(str1 + i, str2, strlen(str2)) == 0)
-            return (char*)(str1 + i);
+            return str1 + i;
 
-    return (char*)NULL;
+    return nullptr;
 }
 
 //Returns a pointer to the first occurrence of character in the C string str.
-char *strchr(char *str, char c)
+const char* strchr(const char* str, char c)
 {
     int i;
 
@@ -216,7 +210,7 @@ char *strchr(char *str, char c)
     return (char*) NULL;
 }
 
-void va_stringf(char *strDest, char *strFormat, va_list list)
+void va_stringf(char *strDest, const char* strFormat, va_list list)
 {
 	int i;
 	int size = 0;
