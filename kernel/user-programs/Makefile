@@ -19,5 +19,5 @@ clean:
 %.bin: %.o systemFunc.o ../stdlib/stdlib.o
 	$(LD) $(LDFLAGS) $^ -o $@
 
-%.o: %.c
+%.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $^ -o $@

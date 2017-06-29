@@ -34,7 +34,7 @@ typedef struct
     RegisterList registers;
     unsigned int memoryPages[PROC_MAX_MEMORY_PAGES]; //addresses of process memory pages
     Heap processHeap; //user process heap
-}  __attribute__((packed)) PCB;
+} PCB;
 
 typedef PCB* PID;
 
