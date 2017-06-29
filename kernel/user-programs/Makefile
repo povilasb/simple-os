@@ -1,6 +1,7 @@
 CXXFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
 	-fno-pic -std=c++14 -fno-rtti -fno-exceptions -Wall -Wextra
 LDFLAGS = --Ttext 0x0 --oformat binary -m elf_i386
+LD = ld
 
 programs = shell IdleProcess prog1 error input
 header_files = $(programs:=.bin.h)
@@ -16,7 +17,7 @@ clean:
 	xxd -i $< $@
 
 %.bin: %.o systemFunc.o ../stdlib/stdlib.o
-	ld $(LDFLAGS) $^ -o $@
+	$(LD) $(LDFLAGS) $^ -o $@
 
 %.o: %.c
 	$(CXX) $(CXXFLAGS) -c $^ -o $@

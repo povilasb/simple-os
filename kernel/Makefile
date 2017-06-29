@@ -9,9 +9,11 @@ obj_files = $(src_files:.c=.o)
 
 CXXFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
 	-fno-pic -std=c++14 -fno-rtti -fno-exceptions -Wall -Wextra
+LDFLAGS = --Ttext 0x6400000 -m elf_i386 -s --oformat binary
+LD = ld
 
 all: user_programs $(obj_files) pmode/interrupts.o
-	ld --Ttext 0x6400000 -m elf_i386 -s --oformat binary $(obj_files) pmode/interrupts.o -o main.bin
+	$(LD) $(LDFLAGS) $(obj_files) pmode/interrupts.o -o main.bin
 	cd ../bootloader && make
 	cat ../bootloader/boot.bin main.bin /dev/zero | head -c 1474560 > sos.img
 
