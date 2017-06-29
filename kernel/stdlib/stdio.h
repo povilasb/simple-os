@@ -8,9 +8,9 @@
 void set_videoMemorySegment(unsigned short segment);
 
 void kprint_symbol(char symb, int pos);
-int kprint_str(char *message, unsigned int line);
-void kprint(char *str);
-void kprintf(char *str, ...);
+int kprint_str(const char* message, unsigned int line);
+void kprint(const char *str);
+void kprintf(const char* str, ...);
 
 void console_scroll(int lineCount);
 void clear_screen();

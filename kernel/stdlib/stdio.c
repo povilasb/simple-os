@@ -24,7 +24,7 @@ void kprint_symbol(char symb, int pos)
         );
 }
 
-int kprint_str(char *message, unsigned int cursor)
+int kprint_str(const char* message, unsigned int cursor)
 {
 	unsigned int i = 0;
     unsigned int j = 0;
@@ -59,12 +59,12 @@ int kprint_str(char *message, unsigned int cursor)
     return i;
 }
 
-void kprint(char *str)
+void kprint(const char *str)
 {
     consoleCursorPos = kprint_str(str, consoleCursorPos);
 }
 
-void kprintf(char *str, ...)
+void kprintf(const char* str, ...)
 {
      char formatedStr[2048];
      va_list list;
