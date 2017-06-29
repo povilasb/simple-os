@@ -62,7 +62,7 @@ void start_processScheduler()
     process_loadContext(runningProcess);
 }
 
-unsigned int load_process(unsigned int *pages, char *processName)
+unsigned int load_process(unsigned int *pages, const char* processName)
 {
     const FileNode* program;
     int pageCount;
@@ -96,7 +96,7 @@ unsigned int load_process(unsigned int *pages, char *processName)
     return pageCount;
 }
 
-PID create_process(char *processName)
+PID create_process(const char* processName)
 {
     PCB *pcb;
     int i;

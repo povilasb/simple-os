@@ -23,7 +23,7 @@ void init_fileSystem()
 
 }
 
-const FileNode* find_file(char *fileName)
+const FileNode* find_file(const char* fileName)
 {
     for (int i = 0; i < filesCount; i++)
         if (strcmp(fileList[i].name, fileName) == 0)
