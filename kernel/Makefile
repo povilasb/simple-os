@@ -17,7 +17,7 @@ all: user_programs $(obj_files) pmode/interrupts.o
 	cd ../bootloader && make
 	cat ../bootloader/boot.bin main.bin /dev/zero | head -c 1474560 > sos.img
 
-%.o: %.c
+%.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $^ -o $@
 
 .PHONY: user_programs
