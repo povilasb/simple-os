@@ -8,9 +8,7 @@ unsigned char keyboardBufferPos = 0;
 
 void init_keyboard()
 {
-    int i;
-
-    for (i = 0; i < sizeof(symbolTable); i++)
+    for (auto i = 0u; i < sizeof(symbolTable); i++)
         symbolTable[i] = UNKNOWN_SYMBOL;
 
     symbolTable[0x2] = '1'; symbolTable[0x3] = '2'; symbolTable[0x4] = '3';
