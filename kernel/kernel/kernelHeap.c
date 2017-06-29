@@ -47,7 +47,6 @@ void heap_removeElement(Heap *heap) //removes last element
 
 void *heap_malloc(Heap *heap, unsigned int size)
 {
-    int temp;
     int physicalSize;
     HeapElement *heapElement;
 

@@ -28,7 +28,6 @@ int kprint_str(const char* message, unsigned int cursor)
 {
 	unsigned int i = 0;
     unsigned int j = 0;
-    char symb;
     unsigned int line;
 
 	i = cursor;
@@ -80,7 +79,6 @@ void console_scroll(int lineCount)
     int spacesToFill;
     int copyStart; //offset from where to start copying
     int spacesStart;
-    unsigned short a;
 
     bytesToCopy =  (SCREEN_LINE_COUNT - lineCount) * SCREEN_LINE_LENGTH * SCREEN_BYTES_PER_SYMBOL;
     spacesToFill = lineCount * SCREEN_LINE_LENGTH * SCREEN_BYTES_PER_SYMBOL;

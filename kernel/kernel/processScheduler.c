@@ -278,7 +278,6 @@ void keyboard_askResource()
 void keyboard_createResource(char *line)
 {
     PID pid;
-    char *p;
     int i;
 
     //remove process from waiting queues

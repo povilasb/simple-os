@@ -88,7 +88,6 @@ void idt_setEntry(uint number, uint isrAddr, ushort segment, uchar present, ucha
 void init_idt()
 {
     int i;
-    char str[256];
 
     for (i = 0; i < 255; i++)
         idt_setEntry(i, 0, 0, 0, 0, 0, 0xE); //not present

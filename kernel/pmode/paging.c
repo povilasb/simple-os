@@ -14,8 +14,7 @@ PageDirectory *pageDirectory;
 //visus puslapius nustatyti i not present
 void init_paging()
 {
-    int i, j;
-    PageTable *pageTable;
+    int i;
 
     for (i = 0; i < FRAMES_COUNT; i++)
         frames[i] = 0; //unused
@@ -30,7 +29,7 @@ void init_paging()
     for (i = 0; i < 1024; i++)
     {
         set_pageTableEntry(&pageDirectory->entry[i], 0, 0, 0, 0); //not present
-        pageTable = (PageTable*) frame_address(PAGE_TABLES_START + i);
+        // PageTable* pageTable = (PageTable*) frame_address(PAGE_TABLES_START + i);
         //for (j = 0; j < 1024; j++)
             //set_pageTableEntry(&pageTable->entry[j], 0, 0, 0, 0); //not present
     }
@@ -82,6 +81,10 @@ unsigned int frame_alloc()
                 temp >>= 1;
             }
         }
+
+    // TODO: this is wrong. Error should be returned. But currently there's
+    // not way to do this.
+    return 0;
 }
 
 //sets frame usage bit to 0
