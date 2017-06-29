@@ -4,11 +4,9 @@
 
 const char HEX_DIGITS[] = "0123456789abcdef";
 
-int memcpy(char *dst, const char* src, int n)
+void memcpy(char *dst, const char* src, unsigned int n)
 {
-    int i;
-
-    for (i = 0; i < n; i++)
+    for (auto i = 0u; i < n; i++)
         dst[i] = src[i];
 }
 

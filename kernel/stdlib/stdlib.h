@@ -7,7 +7,7 @@
 #define TRUE 1
 #define FALSE 0
 
-int memcpy(char *dst, const char* src, int n);
+void memcpy(char *dst, const char* src, unsigned int n);
 void memset(char *dst, unsigned char value, unsigned int n);
 int memcmp(const char* p1, const char* p2, unsigned int size);
 
