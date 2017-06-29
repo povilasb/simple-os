@@ -2,11 +2,9 @@
 #include "kernelHeap.h"
 
 //allocates frames
+// TODO: remove size parameter?
 MemoryResource *create_memoryResource(unsigned int size)
 {
-    MemoryResource *memRes;
-
-    memRes = (MemoryResource*)kmalloc(sizeof(MemoryResource));
-
-    return memRes;
+    (void)size;
+    return static_cast<MemoryResource*>(kmalloc(sizeof(MemoryResource)));
 }

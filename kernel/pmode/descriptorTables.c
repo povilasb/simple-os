@@ -194,10 +194,10 @@ void int0x8_handler()
 
 void int0xB_handler(IntWithErrorRegisters regs)
 {
-    PID pid;
+    (void)regs;
 
     asm("mov %0, %%esp" : : "r" (get_kernelESP()));
-    pid = get_runningProcess();
+    PID pid = get_runningProcess();
     kprintf("#----Error---- Segment not present: %s pid=0x%x\n", pid->processName, pid->pid);
 
     terminate_process(pid);
