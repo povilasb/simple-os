@@ -8,7 +8,7 @@
 #define FALSE 0
 
 int memcpy(char *dst, const char* src, int n);
-int memset(char *dst, unsigned char value, unsigned int n);
+void memset(char *dst, unsigned char value, unsigned int n);
 int memcmp(const char* p1, const char* p2, unsigned int size);
 
 void int_toStr(char *str, int num, int base);

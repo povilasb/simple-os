@@ -12,7 +12,7 @@ int memcpy(char *dst, const char* src, int n)
         dst[i] = src[i];
 }
 
-int memset(char *dst, unsigned char value, unsigned int n)
+void memset(char *dst, unsigned char value, unsigned int n)
 {
     for (auto i = 0u; i < n; i++)
         dst[i] = value;
