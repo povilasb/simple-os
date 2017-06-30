@@ -9,14 +9,18 @@ that runs on x86 machines. It was implemented as a university task.
 
 Currently it only runs in 32bit mode.
 
-.. image:: sos.png
-
 Build requirements
 ==================
 
 ::
 
     $ apt install g++ xxd make nasm
+
+Gallery
+=======
+
+.. image:: img/thinkpad_x220.jpg
+.. image:: sos.png
 
 Similar projects
 ================
