@@ -99,13 +99,13 @@ welcome_msg db "SOS 2011 bootloader", 13, 10, 0
 kernel_stack_pointer dd 0x6504FFF
 
 START:
-    mov [boot_disk], dl ; BIOS fills dl with disk number
-
     xor ax, ax ;ax = 0
     mov es, ax
     mov ds, ax
     mov ss, ax
     mov sp, 0x700 ;stack 512 bytes
+
+    mov [boot_disk], dl ; BIOS fills dl with disk number
 
     mov si, welcome_msg
     call print_bios
