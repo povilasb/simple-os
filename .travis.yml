@@ -1,17 +1,29 @@
 language: cpp
+dist: trusty
 
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - g++-6
-    - vim-common
-    - nasm
+matrix:
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+      env:
+        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
 
-env:
-  - COMPILER_EVAL="CC=gcc-6 && CXX=g++-6"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - llvm-toolchain-trusty-4.0
+          packages:
+            - clang-4.0
+      env:
+        - MATRIX_EVAL="CC=clang-4.0 && CXX=clang++-4.0"
 
 script:
-  - eval "${COMPILER_EVAL}"
+  - sudo apt-get -q update && sudo apt-get install -y vim-common nasm
+  - eval "${MATRIX_EVAL}"
   - make -C kernel
