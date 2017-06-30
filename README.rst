@@ -20,7 +20,7 @@ Gallery
 =======
 
 .. image:: img/thinkpad_x220.jpg
-.. image:: sos.png
+.. image:: img/qemu.png
 
 Similar projects
 ================
