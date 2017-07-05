@@ -1,7 +1,8 @@
 stdlib_srcs := $(shell find stdlib -name '*.cc')
 pmode_srcs := $(shell find pmode -name '*.cc')
 kernel_srcs := $(shell find kernel -name '*.cc')
-all_src_files = main.cc $(stdlib_srcs) $(pmode_srcs) $(kernel_srcs)
+src_files := $(shell find src -name '*.cc')
+all_src_files = main.cc $(stdlib_srcs) $(pmode_srcs) $(kernel_srcs) $(src_files)
 obj_files = $(all_src_files:.cc=.o)
 
 CXXFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
