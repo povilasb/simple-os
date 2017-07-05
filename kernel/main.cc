@@ -14,7 +14,7 @@
 
 void print_device_info();
 
-int main()
+extern "C" int kmain()
 {
     PID pidShell;
 

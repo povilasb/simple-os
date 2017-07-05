@@ -7,7 +7,7 @@ obj_files = $(all_src_files:.cc=.o)
 
 CXXFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
 	-fno-pic -std=c++14 -fno-rtti -fno-exceptions -Wall -Wextra
-LDFLAGS = --Ttext 0x6400000 -m elf_i386 -s --oformat binary
+LDFLAGS = --Ttext 0x6400000 -m elf_i386 -s --oformat binary -e kmain
 LD = ld
 
 all: user_programs $(obj_files) pmode/interrupts.o
