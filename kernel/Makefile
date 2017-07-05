@@ -1,11 +1,8 @@
-#main make file
-
-src_files = main.c stdlib/stdio.c stdlib/stdlib.c pmode/descriptorTables.c \
-	pmode/irq.c kernel/processScheduler.c kernel/kernelHeap.c \
-	stdlib/queue.c kernel/fileSystem.c pmode/paging.c \
-	kernel/resourceManager.c kernel/syscalls.c pmode/keyboard.c \
-	stdlib/stack.c
-obj_files = $(src_files:.c=.o)
+stdlib_srcs := $(shell find stdlib -name '*.cc')
+pmode_srcs := $(shell find pmode -name '*.cc')
+kernel_srcs := $(shell find kernel -name '*.cc')
+all_src_files = main.cc $(stdlib_srcs) $(pmode_srcs) $(kernel_srcs)
+obj_files = $(all_src_files:.cc=.o)
 
 CXXFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
 	-fno-pic -std=c++14 -fno-rtti -fno-exceptions -Wall -Wextra
