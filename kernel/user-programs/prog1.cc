@@ -1,5 +1,4 @@
 #include "systemFunc.h"
-#include "../kernel/syscalls.h"
 
 void start()
 {
