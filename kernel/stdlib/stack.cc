@@ -5,7 +5,7 @@
 #include "stack.h"
 #include "stdlib.h"
 #include "stdio.h"
-#include "../kernel/kernelHeap.h"
+#include "../src/kernelHeap.h"
 
 void init_stack(Stack *s)
 {

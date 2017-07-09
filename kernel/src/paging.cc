@@ -1,7 +1,7 @@
 #include "paging.h"
 #include "../stdlib/stdio.h"
 #include "../stdlib/stdlib.h"
-#include "../kernel/kernelHeap.h"
+#include "../src/kernelHeap.h"
 
 /*
     max user memory is 1 MB because virtual addr 0x100000 is where

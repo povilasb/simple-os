@@ -1,7 +1,7 @@
 #ifndef _PAGING_H
 #define _PAGING_H
 
-#include "../kernel/kernelHeap.h"
+#include "../src/kernelHeap.h"
 
 #define FRAMES_COUNT 1024*128
 #define FRAMES_START_ADDR 0x100000

@@ -1,7 +1,8 @@
-#include "kernelHeap.h"
 #include "../stdlib/stdlib.h"
 #include "../stdlib/stdio.h"
-#include "../pmode/paging.h"
+
+#include "kernelHeap.h"
+#include "paging.h"
 
 Heap kernelHeap;
 

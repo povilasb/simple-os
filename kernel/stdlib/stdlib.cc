@@ -1,6 +1,6 @@
 #include "stdlib.h"
 #include "stdarg.h"
-#include "../kernel/kernelHeap.h"
+#include "../src/kernelHeap.h"
 
 const char HEX_DIGITS[] = "0123456789abcdef";
 

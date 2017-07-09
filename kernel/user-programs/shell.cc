@@ -1,5 +1,4 @@
 #include "systemFunc.h"
-#include "../kernel/syscalls.h"
 #include "../stdlib/stdlib.h"
 
 void print_help();

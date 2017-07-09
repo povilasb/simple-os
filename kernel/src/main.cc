@@ -1,20 +1,20 @@
-#include "stdlib/stdio.h"
-#include "stdlib/stdlib.h"
-#include "pmode/descriptorTables.h"
-#include "pmode/irq.h"
-#include "pmode/keyboard.h"
-#include "kernel/processScheduler.h"
-#include "kernel/kernelHeap.h"
-#include "pmode/paging.h"
-#include "kernel/fileSystem.h"
+#include "../stdlib/stdio.h"
+#include "../stdlib/stdlib.h"
 
-#include "src/io.hh"
-#include "src/pci.hh"
-#include "src/types.hh"
+#include "irq.h"
+#include "keyboard.h"
+#include "paging.h"
+#include "descriptorTables.h"
+#include "fileSystem.h"
+#include "kernelHeap.h"
+#include "processScheduler.h"
+#include "io.hh"
+#include "pci.hh"
+#include "types.hh"
 
 void print_device_info();
 
-int main()
+extern "C" int kmain()
 {
     PID pidShell;
 
