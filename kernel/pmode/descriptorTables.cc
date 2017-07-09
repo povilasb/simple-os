@@ -2,7 +2,7 @@
 #include "../stdlib/stdio.h"
 #include "../stdlib/stdlib.h"
 #include "irq.h"
-#include "../kernel/syscalls.h"
+#include "../src/syscalls.h"
 #include "../src/processScheduler.h"
 #include "keyboard.h"
 

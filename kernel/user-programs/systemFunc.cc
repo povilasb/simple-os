@@ -1,7 +1,7 @@
 #include "systemFunc.h"
 #include "../stdlib/stdarg.h"
 #include "../stdlib/stdlib.h"
-#include "../kernel/syscalls.h"
+#include "../src/syscalls.h"
 
 void uprintf(const char *str, ...)
 {
