@@ -1,7 +1,7 @@
 #ifndef _SYSCALLS_H
 #define _SYSCALLS_H
 
-#include "../pmode/descriptorTables.h"
+#include "descriptorTables.h"
 
 #define SYSCALL_EXIT 100 //exit process
 #define SYSCALL_PRINT 101 //output string

@@ -1,8 +1,8 @@
-#include "../pmode/descriptorTables.h"
 #include "../stdlib/stdio.h"
 #include "../stdlib/stdlib.h"
 
 #include "syscalls.h"
+#include "descriptorTables.h"
 #include "processScheduler.h"
 #include "kernelHeap.h"
 

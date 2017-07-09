@@ -1,11 +1,12 @@
-#include "processScheduler.h"
 #include "../stdlib/stdlib.h"
 #include "../stdlib/queue.h"
 #include "../stdlib/stdio.h"
-#include "fileSystem.h"
-#include "../pmode/paging.h"
-#include "../pmode/descriptorTables.h"
 #include "../stdlib/stack.h"
+
+#include "processScheduler.h"
+#include "fileSystem.h"
+#include "paging.h"
+#include "descriptorTables.h"
 #include "kernelHeap.h"
 
 Queue allProcesses;

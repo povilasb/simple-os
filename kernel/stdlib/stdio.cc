@@ -2,7 +2,7 @@
 #include "stdlib.h"
 #include "stdarg.h"
 
-#include "../pmode/paging.h"
+#include "../src/paging.h"
 
 int currentLine = 0; //unused
 int consoleCursorPos = 0;

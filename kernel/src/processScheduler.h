@@ -2,7 +2,7 @@
 #define _PROCESSSCHEDULER_H
 
 #include "../stdlib/queue.h"
-#include "../pmode/descriptorTables.h"
+#include "descriptorTables.h"
 #include "kernelHeap.h"
 
 #define PROC_STATE_NEW 1
