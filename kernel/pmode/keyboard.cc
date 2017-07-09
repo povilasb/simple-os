@@ -1,6 +1,6 @@
 #include "keyboard.h"
 #include "../stdlib/stdio.h"
-#include "../kernel/processScheduler.h"
+#include "../src/processScheduler.h"
 
 unsigned char symbolTable[256];
 char keyboardBuffer[256];

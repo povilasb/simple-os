@@ -4,7 +4,7 @@
 
 #include "queue.h"
 #include "stdlib.h"
-#include "../kernel/kernelHeap.h"
+#include "../src/kernelHeap.h"
 
 void init_queue(Queue *queue)
 {

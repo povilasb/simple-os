@@ -2,8 +2,8 @@
 #include "../pmode/descriptorTables.h"
 #include "../stdlib/stdio.h"
 #include "../stdlib/stdlib.h"
-#include "processScheduler.h"
-#include "kernelHeap.h"
+#include "../src/processScheduler.h"
+#include "../src/kernelHeap.h"
 
 void handle_systemCall(IntRegisters *regs)
 {
