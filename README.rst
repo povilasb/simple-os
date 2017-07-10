@@ -27,3 +27,4 @@ Similar projects
 
 * https://github.com/jbush001/os
 * https://github.com/dthain/basekernel
+* https://github.com/domspad/yehos
