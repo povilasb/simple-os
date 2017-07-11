@@ -5,7 +5,8 @@ all_src_files = src/main.cc $(stdlib_srcs) $(pmode_srcs) $(kernel_srcs) $(src_fi
 obj_files = $(all_src_files:.cc=.o)
 
 CXXFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
-	-fno-pic -std=c++14 -fno-rtti -fno-exceptions -Wall -Wextra
+	-fno-pic -std=c++14 -fno-rtti -fno-exceptions -Wall -Wextra \
+	-Ilibcxx/include -Ilibc/include
 LDFLAGS = --Ttext 0x6400000 -m elf_i386 -s --oformat binary -e kmain
 LD = ld
 
