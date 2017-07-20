@@ -29,3 +29,4 @@ Similar projects
 * https://github.com/dthain/basekernel
 * https://github.com/domspad/yehos
 * https://github.com/blastrock/flix - C++ based kernel.
+* https://github.com/pdziepak/quarnos - C++ kernel with musl libc.
