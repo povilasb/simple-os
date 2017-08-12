@@ -30,3 +30,4 @@ Similar projects
 * https://github.com/domspad/yehos
 * https://github.com/blastrock/flix - C++ based kernel.
 * https://github.com/pdziepak/quarnos - C++ kernel with musl libc.
+* https://github.com/AtheMathmo/toy-os - Rust based kernel.
