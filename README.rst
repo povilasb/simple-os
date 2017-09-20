@@ -32,3 +32,4 @@ Similar projects
 * https://github.com/pdziepak/quarnos - C++ kernel with musl libc.
 * https://github.com/AtheMathmo/toy-os - Rust based kernel.
 * https://github.com/WesleyAC/subatomic - Rust based OS.
+* https://github.com/thepowersgang/rust_os - Rust based experimental OS.
