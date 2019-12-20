@@ -33,3 +33,4 @@ Similar projects
 * https://github.com/AtheMathmo/toy-os - Rust based kernel.
 * https://github.com/WesleyAC/subatomic - Rust based OS.
 * https://github.com/thepowersgang/rust_os - Rust based experimental OS.
+* https://github.com/solson/spideros - C++14 based OS.
